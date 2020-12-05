@@ -1,0 +1,137 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    编辑商品-{{ product.title }}
+{% endblock %}
+{% block page_title %}
+    编辑商品
+{% endblock %}
+
+{% block body %}
+    <form action="" class="card" enctype="multipart/form-data" method="post">
+        <div class="card-header">编辑</div>
+        <div class="card-body">
+            <div class="col-xl-4" style="margin: 0 auto">
+                <div class="mb-3">
+                    <label class="form-label required" for="">Title</label>
+                    <div class="form-widget">
+                        <input type="text" name="title" required="required" value="{{ product.title }}" class="form-control">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label required" for="stores">Stores</label>
+                    <select name="stores[]" class="form-control select selectpicker" multiple>
+                        {% for store in store_list() %}
+                            <option value="{{ store.id }}" {% if store.id in product.storeIds %}selected{% endif %}>{{ store.title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label required" for="">Head Image</label>
+                    <div class="form-widget">
+                        {{ include('included/imageUpload.twig',{id:'head_image',previewUrl:product.headImage,size:1}) }}
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label required" for="">Banner Images</label>
+                    <div class="form-widget">
+                        {{ include('included/imageUpload.twig',{id:'banner_image',previewUrl:product.banners,size:9}) }}
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label required" for="">Likes</label>
+                    <div class="form-widget">
+                        <input type="number" name="likes" required="required" class="form-control" value="{{ product.likes }}">
+                    </div>
+                </div>
+                <div class="field-money mb-3">
+                    <label for="price" class="form-label required">Price</label>
+                    <div class="form-widget">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">CN¥ </span>
+                            </div>
+                            <input type="text" id="price" name="price" required="required" align="right" class="form-control" value="{{ product.price }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="field-money mb-3">
+                    <label for="price_was" class="form-label required">Price Was</label>
+                    <div class="form-widget">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">CN¥ </span>
+                            </div>
+                            <input type="text" id="price_was" name="price_was" required="required" align="right" class="form-control" value="{{ product.priceWas }}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label required" for="">Quantity</label>
+                    <div class="form-widget">
+                        <input type="number" name="quantity" required="required" class="form-control" value="{{ product.quantity }}">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label required" for="">Sold Count</label>
+                    <div class="form-widget">
+                        <input type="number" name="sold_count" required="required" class="form-control" value="{{ product.soldCount }}">
+                    </div>
+                </div>
+                <div class="field-select mb-3">
+                    <label class="form-label" for="tags">Tags</label>
+                    <div class="form-widget">
+                        <select name="tags[]" data-widget="select2" class="form-control" multiple="multiple">
+                            {% for tag in tag_list() %}
+                                <option value="{{ tag.id }}" {% if tag.id in product.tagIds %}selected{% endif %}>{{ tag.label }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="field-datetime mb-3">
+                    <label for="editor_area" class="form-label required">Description</label>
+                    <div class="form-widget">
+                        <textarea name="description" class="form-control" style="display: none" id="editor_area" cols="30" rows="10"></textarea>
+                        <div id="editor">{{ product.description|raw }}</div>
+                    </div>
+                </div>
+                <div class="field-datetime mb-3">
+                    <label for="endTime" class="form-label required">End Time</label>
+                    <input type="text" id="endTime" value="{{ product.endTime|date('Y-m-d H:i:s') }}" class="form-control" name="end_time" placeholder="选择结束日期" readonly>
+                </div>
+                <div class="field-select mb-3">
+                    <label class="form-label required" for="status">Status</label>
+                    <div class="form-widget">
+                        <select name="status" data-widget="select2" class="form-control" >
+                            <option value="onsale" {% if product.status == 'onsale' %}selected{% endif %}>在售</option>
+                            <option value="instock" {% if product.status == 'instock' %}selected{% endif %}>在库中</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for=""></label>
+                    <div class="form-widget">
+                        <button type="submit" class="btn btn-primary w-100">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+    const E = window.wangEditor
+    const editor = new E('#editor')
+    editor.config.zIndex = 3
+    // 或者 const editor = new E( document.getElementById('div1') )
+    editor.config.onchange = function (newHtml) {
+        document.getElementById('editor_area').innerHTML = newHtml;
+        console.log(document.getElementById('editor_area').innerHTML);
+    }
+    editor.create()
+</script>
+{% endblock %}

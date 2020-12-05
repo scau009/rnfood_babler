@@ -1,0 +1,52 @@
+<div>
+    <div class="row">
+        {% for i in 0..(size-1) %}
+            <div data-i="{{ i }}" id="{{ id }}_image_trigger_{{ i }}" data-input_target="#{{ id }}_upload_item_input_{{ i }}" class="col-4 mx-1 my-1 image_trigger upload_item upload-trigger text-center">
+                <img data-default="{{ asset('/images/upload.png') }}"
+                     {% if previewUrl %}
+                            {% if (previewUrl is iterable) %}
+                                {% if previewUrl|length >= i+1 %}
+                                    src="{{ previewUrl[i] }}"
+                                {% else %}
+                                    src="{{ asset('/images/upload.png') }}"
+                                {% endif %}
+                            {% else %}
+                                    src="{{ previewUrl }}"
+                            {% endif %}
+                        {% else %}
+                                src="{{ asset('/images/upload.png') }}"
+                        {% endif %}
+                     alt=""
+                     style="{% if previewUrl %}
+                            {% if previewUrl is iterable %}
+                                {% if previewUrl|length >= i+1 %}
+                                     max-width: 90px;max-height: 90px;
+                                {% else %}
+                                     width: 50px;height: 50px;
+                                {% endif %}
+                            {% else %}
+                             max-width: 90px;max-height: 90px;
+                         {% endif %}
+                           {% else  %}
+                          width: 50px;height: 50px;
+                     {% endif %}" >
+            </div>
+            <div style="display: none">
+                <input type="file" data-eid="#{{ id }}_image_trigger_{{ i }}" class="upload upload_item_input" name="{{ id }}_{{ i }}" accept="image/*" id="{{ id }}_upload_item_input_{{ i }}">
+                {% if previewUrl %}
+                    {% if (previewUrl is iterable) %}
+                        {% if previewUrl|length >= i+1 %}
+                            <input type="hidden" name="{{ id }}_text_{{ i }}" value="{{ previewUrl[i] }}">
+                        {% else %}
+                            src="{{ asset('/images/upload.png') }}"
+                        {% endif %}
+                    {% else %}
+                        <input type="hidden" name="{{ id }}_text_{{ i }}" value="{{ previewUrl }}">
+                    {% endif %}
+                {% else %}
+                    src="{{ asset('/images/upload.png') }}"
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</div>

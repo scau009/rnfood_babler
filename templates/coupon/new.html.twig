@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    创建优惠券
+{% endblock %}
+{% block page_title %}
+    创建优惠券
+{% endblock %}
+
+{% block body %}
+    <form action="" class="card" enctype="multipart/form-data" method="post">
+        <div class="card-header">创建</div>
+        <div class="card-body">
+            <div class="col-xl-4" style="margin: 0 auto">
+                <div class="mb-3">
+                    <label class="form-label required" for="">ClientId</label>
+                    <div class="form-widget">
+                        <input type="text" name="clientId" placeholder="客户uid" required="required" class="form-control">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label required" for="status">类型</label>
+                    <div class="form-widget">
+                        <select name="type" data-widget="select2" class="form-control" >
+                            <option value="gift" selected>赠送</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label required" for="status">产品</label>
+                    <div class="form-widget">
+                        <select name="productId" data-widget="select2" class="form-control" >
+                            {% for product in product_list() %}
+                                <option value="{{ product.id }}">{{ product.title }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="field-datetime mb-3">
+                    <label for="endTime" class="form-label required">开始时间</label>
+                    <input type="text" id="beginAt" class="form-control" name="begin_at" placeholder="选择开始日期" readonly>
+                </div>
+                <div class="field-datetime mb-3">
+                    <label for="endTime" class="form-label required">过期时间</label>
+                    <input type="text" id="expireAt" class="form-control" name="expire_at" placeholder="选择过期日期" readonly>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for=""></label>
+                    <div class="form-widget">
+                        <button type="submit" class="btn btn-primary w-100">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        laydate.render({
+            elem: '#expireAt', //指定元素
+            type: 'datetime'
+        });
+        laydate.render({
+            elem: '#beginAt', //指定元素
+            type: 'datetime'
+        });
+    </script>
+{% endblock %}

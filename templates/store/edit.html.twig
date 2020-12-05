@@ -1,0 +1,141 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    编辑门店-{{ store.title }}
+{% endblock %}
+{% block page_title %}
+    编辑门店
+{% endblock %}
+
+{% block body %}
+    <form action="" class="card" enctype="multipart/form-data" method="post">
+        <div class="card-header">编辑</div>
+        <div class="card-body">
+            <div class="col-xl-4" style="margin: 0 auto">
+                <div class="mb-3">
+                    <label class="form-label required" for="">Title</label>
+                    <div class="form-widget">
+                        <input type="text" name="title" required="required" class="form-control" value="{{ store.title }}">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label required" for="stores">Company</label>
+                    <select name="company_id" class="form-control select selectpicker">
+                        {% for company in company_list() %}
+                            <option value="{{ company.id }}" {% if company.id == store.company.id %}selected{% endif %}>{{ company.title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label required" for="">Logo</label>
+                    <div class="form-widget">
+                        {{ include('included/imageUpload.twig',{id:'logo_image',previewUrl:store.logo,size:1}) }}
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label required" for="">Banner Images</label>
+                    <div class="form-widget">
+                        {{ include('included/imageUpload.twig',{id:'banner_image',previewUrl:store.banners,size:9}) }}
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label required" for="">Mobile</label>
+                    <div class="form-widget">
+                        <input type="text" name="mobile" required="required" class="form-control" value="{{ store.mobile }}">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label required" for="">Likes</label>
+                    <div class="form-widget">
+                        <input type="number" name="likes" required="required" class="form-control" value="{{ store.likes }}">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label required" for="">Score</label>
+                    <div class="form-widget">
+                        <input type="number" name="score" required="required" class="form-control" value="{{ store.score }}">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label required" for="">Province</label>
+                    <div class="form-widget">
+                        <input type="text" name="province" required="required" class="form-control" value="{{ store.province }}">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label required" for="">City</label>
+                    <div class="form-widget">
+                        <input type="text" name="city" required="required" class="form-control" value="{{ store.city }}">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label required" for="">Area</label>
+                    <div class="form-widget">
+                        <input type="text" name="area" required="required" class="form-control" value="{{ store.area }}">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label required" for="">Route</label>
+                    <div class="form-widget">
+                        <input type="text" name="route" required="required" class="form-control" value="{{ store.route }}">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label required" for="">LocationX</label>
+                    <div class="form-widget">
+                        <input type="text" name="location_x" required="required" class="form-control" value="{{ store.locationX }}">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label required" for="">LocationY</label>
+                    <div class="form-widget">
+                        <input type="text" name="location_y" required="required" class="form-control" value="{{ store.locationY }}">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label required" for="">Day Begin</label>
+                    <div class="form-widget">
+                        <input type="text" name="day_begin" required="required" class="form-control" value="{{ store.dayBegin }}">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label required" for="">Day End</label>
+                    <div class="form-widget">
+                        <input type="text" name="day_end" required="required" class="form-control" value="{{ store.dayEnd }}">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label required" for="">Time Begin</label>
+                    <div class="form-widget">
+                        <input type="text" name="time_begin" required="required" class="form-control" value="{{ store.timeBegin }}">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label required" for="">Time End</label>
+                    <div class="form-widget">
+                        <input type="text" name="time_end" required="required" class="form-control" value="{{ store.timeEnd }}">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label required" for="status">Status</label>
+                    <div class="form-widget">
+                        <select name="status" data-widget="select2" class="form-control" >
+                            <option value="on" {% if store.status == 'on' %}selected{% endif %}>正常</option>
+                            <option value="off" {% if store.status == 'off' %}selected{% endif %}>禁用</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for=""></label>
+                    <div class="form-widget">
+                        <button type="submit" class="btn btn-primary w-100">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

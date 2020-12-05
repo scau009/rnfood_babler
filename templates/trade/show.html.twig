@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+{% block page_title %}
+    客户详情
+{% endblock %}
+{% block title %}
+    客户详情
+{% endblock %}
+{% block body %}
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">{{ client.username }}</h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-6 mx-auto">
+                    <div class="list list-row list-hoverable">
+                        <div class="list-item">
+                            <div class="mr-2">Avatar：</div>
+                            <img src="{{ client.avatar }}" class="avatar-sm" alt="">
+                        </div>
+                    </div>
+                    <div class="list list-row list-hoverable">
+                        <div class="list-item">
+                            <div class="mr-2">UserName：</div>
+                            <span class="text-body d-block">{{ client.username }}</span>
+                        </div>
+                    </div>
+                    <div class="list list-row list-hoverable">
+                        <div class="list-item">
+                            <div class="mr-2">Gender：</div>
+                            <span class="text-body d-block">{{ client.gender }}</span>
+                        </div>
+                    </div>
+                    <div class="list list-row list-hoverable">
+                        <div class="list-item">
+                            <div class="mr-2">OpenId：</div>
+                            <span class="text-body d-block">{{ client.openId }}</span>
+                        </div>
+                    </div>
+                    <div class="list list-row list-hoverable">
+                        <div class="list-item">
+                            <div class="mr-2">RegisterAt：</div>
+                            <span class="text-body d-block">{{ client.registerAt|date('Y-m-d H:i:s') }}</span>
+                        </div>
+                    </div>
+                    <div class="list list-row list-hoverable">
+                        <div class="list-item">
+                            <div class="mr-2">UpdateAt：</div>
+                            <span class="text-body d-block">{{ client.updateAt|date('Y-m-d H:i:s') }}</span>
+                        </div>
+                    </div>
+                    <div class="list list-row list-hoverable">
+                        <div class="list-item">
+                            <div class="mr-2">LastLoginAt：</div>
+                            <span class="text-body d-block">{{ client.lastLoginAt|date('Y-m-d H:i:s') }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

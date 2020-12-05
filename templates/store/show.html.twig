@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+{% block page_title %}
+    门店详情
+{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">{{ store.title }}</h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-6 mx-auto">
+                    <div class="row">
+                        <div class="col-4">
+                            <img src="{{ store.logo }}" class="" alt="">
+                        </div>
+                        <div class="col-8 row">
+                            {% for banner in store.banners %}
+                                <div class="col-4">
+                                    <img src="{{ banner }}" class="" alt="">
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="list list-row list-hoverable">
+                        <div class="list-item">
+                            <div class="mr-2">Company：</div>
+                            <span class="text-body d-block">{{ store.company.title }}</span>
+                        </div>
+                    </div>
+                    <div class="list list-row list-hoverable">
+                        <div class="list-item">
+                            <div class="mr-2">Title：</div>
+                            <span class="text-body d-block">{{ store.title }}</span>
+                        </div>
+                    </div>
+                    <div class="list list-row list-hoverable">
+                        <div class="list-item">
+                            <div class="mr-2">Address：</div>
+                            <span class="text-body d-block">{{ store.province }} {{ store.city }} {{ store.area }} {{ store.route }}</span>
+                        </div>
+                    </div>
+                    <div class="list list-row list-hoverable">
+                        <div class="list-item">
+                            <div class="mr-2">Location：</div>
+                            <span class="text-body d-block">{{ store.locationX }},{{ store.locationY }}</span>
+                        </div>
+                    </div>
+                    <div class="list list-row list-hoverable">
+                        <div class="list-item">
+                            <div class="mr-2">Score：</div>
+                            <span class="text-body d-block">{{ store.score }}</span>
+                        </div>
+                    </div>
+                    <div class="list list-row list-hoverable">
+                        <div class="list-item">
+                            <div class="mr-2">Likes：</div>
+                            <span class="text-body d-block">{{ store.likes }}</span>
+                        </div>
+                    </div>
+                    <div class="list list-row list-hoverable">
+                        <div class="list-item">
+                            <div class="mr-2">Mobile：</div>
+                            <span class="text-body d-block">{{ store.mobile }}</span>
+                        </div>
+                    </div>
+                    <div class="list list-row list-hoverable">
+                        <div class="list-item">
+                            <div class="mr-2">营业时间：</div>
+                            <span class="text-body d-block">{{ store.dayBegin }}{{ store.timeBegin }}至{{ store.dayEnd }}{{ store.timeEnd }}</span>
+                        </div>
+                    </div>
+                    <div class="list list-row list-hoverable">
+                        <div class="list-item">
+                            <div class="mr-2">CreateAt：</div>
+                            <span class="text-body d-block">{{ store.createAt|date('Y-m-d H:i:s') }}</span>
+                        </div>
+                    </div>
+                    <div class="list list-row list-hoverable">
+                        <div class="list-item">
+                            <div class="mr-2">UpdateAt：</div>
+                            <span class="text-body d-block">{{ store.updateAt|date('Y-m-d H:i:s') }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

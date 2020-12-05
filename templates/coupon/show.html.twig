@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+{% block page_title %}
+    优惠券详情
+{% endblock %}
+{% block title %}
+    优惠券详情
+{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-6 mx-auto">
+                    <div class="list list-row list-hoverable">
+                        <div class="list-item">
+                            <div class="mr-2">ID：</div>
+                            <span class="text-body d-block">{{ coupon.id }}</span>
+                        </div>
+                    </div>
+                    <div class="list list-row list-hoverable">
+                        <div class="list-item">
+                            <div class="mr-2">CouponNo：</div>
+                            <span class="text-body d-block">{{ coupon.couponNo }}</span>
+                        </div>
+                    </div>
+                    <div class="list list-row list-hoverable">
+                        <div class="list-item">
+                            <div class="mr-2">Client：</div>
+                            <span class="text-body d-block">{{ coupon.client.username }}{{ coupon.client.id }}</span>
+                        </div>
+                    </div>
+                    <div class="list list-row list-hoverable">
+                        <div class="list-item">
+                            <div class="mr-2">Product：</div>
+                            <span class="text-body d-block">{{ coupon.product.title }}</span>
+                        </div>
+                    </div>
+                    <div class="list list-row list-hoverable">
+                        <div class="list-item">
+                            <div class="mr-2">Stores：</div>
+                            <span class="text-body d-block">
+                                {% for store in coupon.stores %}
+                                    {{ store.title }}
+                                {% endfor %}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="list list-row list-hoverable">
+                        <div class="list-item">
+                            <div class="mr-2">Status：</div>
+                            <span class="text-body d-block">{{ coupon.status }}</span>
+                        </div>
+                    </div>
+                    <div class="list list-row list-hoverable">
+                        <div class="list-item">
+                            <div class="mr-2">BeginAt：</div>
+                            <span class="text-body d-block">{{ coupon.beginAt|date('Y-m-d H:i:s') }}</span>
+                        </div>
+                    </div>
+                    <div class="list list-row list-hoverable">
+                        <div class="list-item">
+                            <div class="mr-2">ExpireAt：</div>
+                            <span class="text-body d-block">{{ coupon.expireAt|date('Y-m-d H:i:s') }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

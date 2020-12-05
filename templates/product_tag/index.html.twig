@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+{% block page_title %}商品标签列表{% endblock %}
+{% block title %}商品标签列表{% endblock %}
+{% block page_buttons %}
+    <a href="{{ path('new_product_tag') }}" class="btn btn-outline-primary">
+        添加商品标签
+    </a>
+{% endblock %}
+{% block body %}
+    <div class="card">
+        <div class="table-responsive">
+            <table class="table table-hover table-vcenter table-mobile-md card-table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Label</th>
+                    <th class="w-1"></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if pagination.getTotalItemCount > 0 %}
+
+                {% for item in pagination %}
+                    <tr>
+                        <td data-label="ID">{{ item.id }}</td>
+                        <td data-label="Label">
+                            <div>{{ item.label }}</div>
+                        </td>
+                        <td>
+                            <div class="btn-list flex-nowrap">
+                                <a href="{{ path('edit_product_tag',{id:item.id}) }}" class="btn btn-white">
+                                    编辑
+                                </a>
+                                <div class="dropdown">
+                                    <button class="btn dropdown-toggle align-text-top" data-boundary="viewport" data-bs-toggle="dropdown">
+                                        操作
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item" href="{{ path('show_product_tag',{id:item.id}) }}">
+                                            详情
+                                        </a>
+                                        <a href="javascript:;" class="dropdown-item" onclick="document.getElementById('delete_form_{{ item.id }}').submit();">
+                                            删除
+                                            <form action="{{ path('delete_product_tag',{id:item.id}) }}" id="delete_form_{{ item.id }}" method="post">
+
+                                            </form>
+                                        </a>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="2" class="text-center text-muted" style="height: 400px"> 暂无数据</td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="col">共{{ pagination.getTotalItemCount }}个商品标签</div>
+                <div class="col text-right">
+                    {# display navigation #}
+                    <div class="navigation float-right">
+                        {{ knp_pagination_render(pagination) }}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

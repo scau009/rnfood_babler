@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+{% block page_title %}
+    商品详情
+{% endblock %}
+{% block title %}
+    商品详情
+{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">{{ product.title }}</h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-6 mx-auto">
+                    <div class="row">
+                        <div class="col-4">
+                            <img src="{{ product.headImage }}" class="" alt="">
+                        </div>
+                        <div class="col-8 row">
+                            {% for banner in product.banners %}
+                                <div class="col-4">
+                                    <img src="{{ banner }}" class="" alt="">
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="list list-row list-hoverable">
+                        <div class="list-item">
+                            <div class="mr-2">标题：</div>
+                            <span class="text-body d-block">{{ product.title }}</span>
+                        </div>
+                        <div class="list-item">
+                            <div class="mr-2">适用门店：</div>
+                            {% for store in product.stores %}
+                                <a href="#" class="text-body d-block">{{ store.title }}</a>
+                            {% endfor %}
+                        </div>
+                        <div class="list-item">
+                            <div class="mr-2">标签：</div>
+                            {% for tag in product.tags %}
+                                <a href="#" class="text-body d-block">{{ tag.label }}</a>
+                            {% endfor %}
+                        </div>
+                        <div class="list-item">
+                            <div class="mr-2">Liks：</div>
+                            <span class="text-body d-block">{{ product.likes }}</span>
+                        </div>
+                        <div class="list-item">
+                            <div class="mr-2">Price：</div>
+                            <span class="text-body d-block">￥{{ product.price }}</span>
+                        </div>
+                        <div class="list-item">
+                            <div class="mr-2">PriceWas：</div>
+                            <span class="text-body d-block">￥{{ product.priceWas }}</span>
+                        </div>
+                        <div class="list-item">
+                            <div class="mr-2">数量：</div>
+                            <span class="text-body d-block">已售：{{ product.soldCount }} 总量：{{ product.quantity }}</span>
+                        </div>
+                        <div class="list-item">
+                            <div class="mr-2">描述：</div>
+                            <span class="text-body d-block">{{ product.description|raw }}</span>
+                        </div>
+                        <div class="list-item">
+                            <div class="mr-2">描述：</div>
+                            <span class="text-body d-block">{{ product.status }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

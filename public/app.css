@@ -1,0 +1,13 @@
+.upload_item {
+    cursor: pointer;
+    border: 1px dashed #cdcdcd;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100px;
+    height: 100px
+}
+.upload_item:hover{
+    border-color: #216bc4;
+}

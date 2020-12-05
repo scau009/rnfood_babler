@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    编辑客户-{{ client.username }}
+{% endblock %}
+{% block page_title %}
+    编辑客户
+{% endblock %}
+
+{% block body %}
+    <form action="" class="card" enctype="multipart/form-data" method="post">
+        <div class="card-header">编辑</div>
+        <div class="card-body">
+            <div class="col-xl-4" style="margin: 0 auto">
+                <div class="mb-3">
+                    <label class="form-label required" for="">Avatar</label>
+                    <div class="form-widget">
+                        {{ include('included/imageUpload.twig',{id:'avatar',previewUrl:client.avatar,size:1}) }}
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label required" for="">Username</label>
+                    <div class="form-widget">
+                        <input type="text" name="username" required="required" value="{{ client.username }}" class="form-control">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label required" for="">OpenId</label>
+                    <div class="form-widget">
+                        <input type="text" name="openId" required="required" value="{{ client.openId }}" class="form-control">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label required" for="">Mobile</label>
+                    <div class="form-widget">
+                        <input type="text" name="mobile" required="required" value="{{ client.mobile }}" class="form-control">
+                    </div>
+                </div>
+
+                <div class="field-select mb-3">
+                    <label class="form-label required" for="status">Gender</label>
+                    <div class="form-widget">
+                        <select name="gender" data-widget="select2" class="form-control" >
+                            <option value="woman" {% if client.gender == 'woman' %}selected{% endif %}>woman</option>
+                            <option value="man" {% if client.gender == 'man' %}selected{% endif %}>man</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label required" for="">LastLoginAt</label>
+                    <div class="form-widget">
+                        <input type="text" name="last_login_at" id="last_login_at" required="required" value="{{ client.lastLoginAt|date('Y-m-d H:i:s') }}" class="form-control" readonly>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for=""></label>
+                    <div class="form-widget">
+                        <button type="submit" class="btn btn-primary w-100">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        laydate.render({
+            elem: '#last_login_at', //指定元素
+            type: 'datetime'
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    编辑优惠券-{{ coupon.couponNo }}
+{% endblock %}
+{% block page_title %}
+    编辑优惠券
+{% endblock %}
+
+{% block body %}
+    <form action="" class="card" enctype="multipart/form-data" method="post">
+        <div class="card-header">编辑</div>
+        <div class="card-body">
+            <div class="col-xl-4" style="margin: 0 auto">
+                <div class="mb-3">
+                    <label class="form-label required" for="">ClientId</label>
+                    <div class="form-widget">
+                        <input type="text" name="clientId" placeholder="客户uid" value="{{ coupon.client.id }}" required="required" class="form-control">
+                        <p class="text-muted">{{ coupon.client.username }}</p>
+                    </div>
+                </div>
+                <div class="field-datetime mb-3">
+                    <label for="endTime" class="form-label required">开始时间</label>
+                    <input type="text" id="beginAt" value="{{ coupon.beginAt|date('Y-m-d H:i:s') }}" class="form-control" name="begin_at" placeholder="选择开始日期" readonly>
+                </div>
+                <div class="field-datetime mb-3">
+                    <label for="endTime" class="form-label required">过期时间</label>
+                    <input type="text" id="expireAt" value="{{ coupon.expireAt|date('Y-m-d H:i:s') }}" class="form-control" name="expire_at" placeholder="选择过期日期" readonly>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label required" for="status">状态</label>
+                    <div class="form-widget">
+                        <select name="status" data-widget="select2" class="form-control" >
+                            <option value="wait_use" {% if coupon.status == 'wait_use' %}selected{% endif %}>待使用</option>
+                            <option value="used"  {% if coupon.status == 'used' %}selected{% endif %}>已使用</option>
+                            <option value="expired"  {% if coupon.status == 'expired' %}selected{% endif %}>已过期</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for=""></label>
+                    <div class="form-widget">
+                        <button type="submit" class="btn btn-primary w-100">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

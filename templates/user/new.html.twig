@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    创建账号
+{% endblock %}
+{% block page_title %}
+    创建账号
+{% endblock %}
+
+{% block body %}
+    <form action="" class="card" enctype="multipart/form-data" method="post" autocomplete="off">
+        <div class="card-header">创建</div>
+        <div class="card-body">
+            <div class="col-xl-4" style="margin: 0 auto">
+                <div class="mb-3">
+                    <label class="form-label required" for="">Email</label>
+                    <div class="form-widget">
+                        <input type="email" required="required" class="form-control" name="email">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label required" for="">Email</label>
+                    <div class="form-widget">
+                        <input type="password" required="required" class="form-control" name="password">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label required" for="status">Roles</label>
+                    <div class="form-widget">
+                        <select name="roles[]" data-widget="select2" class="form-control" multiple>
+                            {% for role in role_list() %}
+                                <option value="{{ role.id }}">{{ role.label }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for=""></label>
+                    <div class="form-widget">
+                        <button type="submit" class="btn btn-primary w-100">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

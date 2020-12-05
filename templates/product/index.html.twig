@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+{% block page_title %}商品列表{% endblock %}
+{% block title %}商品列表{% endblock %}
+{% block page_buttons %}
+    <a href="{{ path('new_product') }}" class="btn btn-outline-primary">
+        添加商品
+    </a>
+{% endblock %}
+{% block body %}
+    <div class="card">
+        <div class="table-responsive">
+            <table class="table table-hover table-vcenter table-mobile-md card-table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>产品</th>
+                    <th>价格</th>
+                    <th>适用门店</th>
+                    <th>有效期</th>
+                    <th>状态</th>
+                    <th class="w-1"></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if pagination.getTotalItemCount > 0 %}
+
+                {% for item in pagination %}
+                    <tr>
+                        <td data-label="ID">{{ item.id }}</td>
+                        <td data-label="Name">
+                            <div class="d-flex py-1 align-items-center">
+                                <span class="avatar mr-2" style="background-image: url({{ item.headImage }})"></span>
+                                <div class="flex-fill">
+                                    <div class="font-weight-medium">{{ item.title }}</div>
+                                    <div class="text-muted"><a href="#" class="text-reset">{{ item.tags|join(' ') }}</a></div>
+                                </div>
+                            </div>
+                        </td>
+                        <td data-label="Title">
+                            <div>￥{{ item.price }}</div>
+                            <div class="text-muted">销量：{{ item.soldCount }} 总量：{{ item.quantity }}</div>
+                        </td>
+                        <td class="text-muted" data-label="Role">
+                            <a href="">{{ item.stores|length }}</a>
+                        </td>
+                        <td data-label="Role">
+                            <div>{{ item.endTime|date('Y-m-d H:i:s') }} 结束</div>
+                        </td>
+                        <td data-label="状态">
+                            <div>{{ item.status }}</div>
+                        </td>
+                        <td>
+                            <div class="btn-list flex-nowrap">
+                                <a href="{{ path('edit_product',{id:item.id}) }}" class="btn btn-white">
+                                    编辑
+                                </a>
+                                <div class="dropdown">
+                                    <button class="btn dropdown-toggle align-text-top" data-boundary="viewport" data-bs-toggle="dropdown">
+                                        操作
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item" href="{{ path('show_product',{id:item.id}) }}">
+                                            详情
+                                        </a>
+                                        <a href="javascript:;" class="dropdown-item" onclick="document.getElementById('delete_form_{{ item.id }}').submit();">
+                                            删除
+                                            <form action="{{ path('delete_product',{id:item.id}) }}" id="delete_form_{{ item.id }}" method="post">
+
+                                            </form>
+                                        </a>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="7" class="text-center text-muted" style="height: 400px"> 暂无数据</td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="col">共{{ pagination.getTotalItemCount }}件商品</div>
+                <div class="col text-right">
+                    {# display navigation #}
+                    <div class="navigation float-right">
+                        {{ knp_pagination_render(pagination) }}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

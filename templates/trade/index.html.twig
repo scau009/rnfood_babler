@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+{% block page_title %}订单列表{% endblock %}
+{% block title %}订单列表{% endblock %}
+{% block body %}
+    <div class="card">
+        <div class="table-responsive">
+            {% if pagination.getTotalItemCount > 0 %}
+                {% for item in pagination %}
+                    <table class="table table-hover table-vcenter table-mobile-md card-table">
+                        <thead>
+                        <tr>
+                            <th>
+                                <div class="col-auto">
+                                    <span class="avatar avatar-sm avatar-rounded" style="background-image: url('{{ item.buyer.avatar }}')"></span>
+                                </div>
+                                <div class="col">
+                                    <div class="text-truncate">
+                                        <strong>{{ item.buyer.name }}</strong>
+                                    </div>
+                                    <div class="text-muted">
+                                        {{ item.buyer.mobile }}
+                                    </div>
+                                </div>
+                            </th>
+                            <th>{{ item.tid }}</th>
+                            <th>{{ item.payment.price }}</th>
+                            <th>{{ item.createAt|date('Y-m-d H:i:s')}}</th>
+                            <th><span class="badge bg-gray-lt">{{ item.status }}</span></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                {% endfor %}
+            {% else %}
+                <table class="table table-hover table-vcenter table-mobile-md card-table">
+                    <tbody>
+                        <tr>
+                            <td colspan="7" class="text-center text-muted" style="height: 400px"> 暂无数据</td>
+                        </tr>
+                    </tbody>
+                </table>
+            {% endif %}
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="col">共{{ pagination.getTotalItemCount }}张订单</div>
+                <div class="col text-right">
+                    {# display navigation #}
+                    <div class="navigation float-right">
+                        {{ knp_pagination_render(pagination) }}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

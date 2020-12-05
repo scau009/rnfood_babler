@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+{% block page_title %}客户列表{% endblock %}
+{% block title %}客户列表{% endblock %}
+{% block body %}
+    <div class="card">
+        <div class="table-responsive">
+            <table class="table table-hover table-vcenter table-mobile-md card-table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>客户</th>
+                    <th>OpenId</th>
+                    <th>性别</th>
+                    <th>注册时间</th>
+                    <th class="w-1"></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if pagination.getTotalItemCount > 0 %}
+                    {% for item in pagination %}
+                        <tr>
+                            <td data-label="ID">{{ item.id }}</td>
+                            <td data-label="Name">
+                                <div class="d-flex py-1 align-items-center">
+                                    <span class="avatar mr-2" style="background-image: url({{ item.avatar }})"></span>
+                                    <div class="flex-fill">
+                                        <div class="font-weight-medium">{{ item.username }}</div>
+                                        <div class="text-muted"><a href="#" class="text-reset">{{ item.mobile }}</a></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td data-label="Title">
+                                <div>{{ item.openId }}</div>
+                            </td>
+                            <td data-label="Title">
+                                <div>{{ item.gender }}</div>
+                            </td>
+                            <td class="text-muted" data-label="Role">
+                                <div>{{ item.registerAt|date('Y-m-d H:i:s') }}</div>
+                            </td>
+                            <td>
+                                <div class="btn-list flex-nowrap">
+                                    <a href="{{ path('edit_client',{id:item.id}) }}" class="btn btn-white">
+                                        编辑
+                                    </a>
+                                    <div class="dropdown">
+                                        <button class="btn dropdown-toggle align-text-top" data-boundary="viewport" data-bs-toggle="dropdown">
+                                            操作
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a class="dropdown-item" href="{{ path('show_client',{id:item.id}) }}">
+                                                详情
+                                            </a>
+                                            {% if is_granted('ROLE_ADMIN') %}
+                                            <a href="javascript:;" class="dropdown-item" onclick="document.getElementById('delete_form_{{ item.id }}').submit();">
+                                                删除
+                                                <form action="{{ path('delete_client',{id:item.id}) }}" id="delete_form_{{ item.id }}" method="post">
+
+                                                </form>
+                                            </a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="7" class="text-center text-muted" style="height: 400px"> 暂无数据</td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="col">共{{ pagination.getTotalItemCount }}家门店</div>
+                <div class="col text-right">
+                    {# display navigation #}
+                    <div class="navigation float-right">
+                        {{ knp_pagination_render(pagination) }}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
