@@ -5,6 +5,7 @@ namespace App\Controller\Api;
 
 use App\Service\Client\ClientService;
 use App\Service\Jwt\JwtService;
+use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,6 +30,6 @@ class AuthController extends BaseApiController
         }
         $client = $clientService->registerByMobile($request->get('mobile'));
         $token = $jwtService->encode($client->getId());
-        return $this->returnJson(['token' => $token]);
+        return View::create(compact('token'));
     }
 }
