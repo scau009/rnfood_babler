@@ -21,7 +21,7 @@ class RequestSubscriber implements EventSubscriberInterface
             if ($content) {
                 $content = json_decode($content, true);
                 foreach ($content as $key => $value) {
-                    $request->query->set($key, $value);
+                    $request->request->set($key, $value);
                 }
             }
         }

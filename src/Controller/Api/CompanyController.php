@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class CompanyController
  * @package App\Controller\Api
- * @Route(path="/api/company")
+ * @Route(path="/company")
  */
 class CompanyController extends BaseApiController
 {

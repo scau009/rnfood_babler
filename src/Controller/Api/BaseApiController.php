@@ -5,12 +5,13 @@ namespace App\Controller\Api;
 
 use App\Response\CMDJsonResponse;
 use App\Security\User\JwtUser;
-use Doctrine\ORM\Tools\Pagination\Paginator;
+use FOS\RestBundle\Controller\AbstractFOSRestController;
+use Knp\Component\Pager\Pagination\PaginationInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\SerializerInterface;
 
-class BaseApiController extends AbstractController
+class BaseApiController extends AbstractFOSRestController
 {
     protected SerializerInterface $serializer;
 
@@ -26,18 +27,18 @@ class BaseApiController extends AbstractController
         return $this->serializer->normalize($data,'json',['groups'=>$group]);
     }
 
-    protected function normalizeList(int $page,int $pageSize,Paginator $paginator)
+    protected function normalizeList(int $page,int $pageSize,PaginationInterface $paginator)
     {
         return [
             'paginator' => [
                 'page' => $page,
                 'pageSize' => $pageSize,
-                'total' => $total = $paginator->count(),
+                'total' => $total = $paginator->getTotalItemCount(),
                 'hasNext' => $total > $pageSize * $pageSize,
             ],
             'list' => array_map(function ($item){
                 return $this->normalize($item);
-            },iterator_to_array($paginator->getIterator()))
+            },iterator_to_array($paginator))
         ];
     }
 

@@ -31,7 +31,6 @@ class Company
 
     /**
      * @ORM\OneToMany(targetEntity=Stores::class, mappedBy="company")
-     * @Groups("api")
      */
     private $stores;
 

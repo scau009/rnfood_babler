@@ -47,8 +47,6 @@ class ClientService
             $client->setOpenId('');
             $this->entityManager->persist($client);
             $this->entityManager->flush();
-        }else{
-            throw new BadRequestHttpException("手机号码已被占用");
         }
 
         return $client;

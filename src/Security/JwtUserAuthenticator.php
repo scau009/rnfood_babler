@@ -17,6 +17,10 @@ class JwtUserAuthenticator extends AbstractGuardAuthenticator
 {
     private array $whiteList = [
         'app_api_auth_login',
+        'app_api_stores_getstorelist',
+        'app_api_product_getproductlist',
+        'app_api_company_getcompanylist',
+        'app_api_product_getproduct',
     ];
     private JwtService $jwtService;
 

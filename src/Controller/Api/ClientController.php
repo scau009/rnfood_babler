@@ -5,24 +5,24 @@ namespace App\Controller\Api;
 
 use App\Response\CMDJsonResponse;
 use App\Security\User\JwtUser;
-use App\Service\Client\TradeService;
+use App\Service\Client\ClientService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class ClientController
  * @package App\Controller\Api
- * @Route(path="/api/clients")
+ * @Route(path="/clients")
  */
 class ClientController extends BaseApiController
 {
     /**
      * @Route(path="/userInfo",methods={"GET"})
      * @param Request $request
-     * @param TradeService $clientService
+     * @param ClientService $clientService
      * @return CMDJsonResponse
      */
-    public function getUserInfoAction(Request $request, TradeService $clientService)
+    public function getUserInfoAction(Request $request, ClientService $clientService)
     {
         $client = $this->user->getEntity();
         return $this->returnJson($this->normalize($client));
@@ -31,10 +31,10 @@ class ClientController extends BaseApiController
     /**
      * @Route(path="/userInfo",methods={"POST"})
      * @param Request $request
-     * @param TradeService $clientService
+     * @param ClientService $clientService
      * @return CMDJsonResponse
      */
-    public function updateUserInfoAction(Request $request, TradeService $clientService)
+    public function updateUserInfoAction(Request $request, ClientService $clientService)
     {
         $client = $clientService->updateUserInfo($this->user->getEntity(),$request->query);
         return $this->returnJson($this->normalize($client));

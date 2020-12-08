@@ -14,9 +14,9 @@ class ExceptionSubscriber implements EventSubscriberInterface
         if (strpos($route,'app_api') === 0) {
             $throwable = $event->getThrowable();
             if (!$throwable instanceof \Exception) {
-                $response = new CMDJsonResponse([],500,$throwable->getMessage());
+                $response = new CMDJsonResponse($throwable->getTrace(),500,$throwable->getMessage());
             }else{
-                $response = new CMDJsonResponse([],$throwable->getCode(),$throwable->getMessage());
+                $response = new CMDJsonResponse($throwable->getTrace(),$throwable->getCode(),$throwable->getMessage());
             }
             $event->setResponse($response);
         }

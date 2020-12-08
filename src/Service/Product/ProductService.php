@@ -77,10 +77,12 @@ class ProductService
             $product->addStore($store);
         }
         $tagIds = $request->get('tags');
-        $tags = $this->productTagsRepo->findByIds($tagIds);
-        /** @var ProductTags $tag */
-        foreach ($tags as $tag) {
-            $product->addTag($tag);
+        if ($tagIds) {
+            $tags = $this->productTagsRepo->findByIds($tagIds);
+            /** @var ProductTags $tag */
+            foreach ($tags as $tag) {
+                $product->addTag($tag);
+            }
         }
         $this->entityManager->persist($product);
         $this->entityManager->flush();
@@ -136,19 +138,27 @@ class ProductService
                 $product->addStore($store);
             }
         }
-        $tagIds = $request->get('tags');
-        $tags = $this->productTagsRepo->findByIds($tagIds);
+        $tagIds = $request->get('tags',[]);
         foreach ($product->getTags() as $productTag) {
             if (!in_array($productTag->getId(),$tagIds)) {
                 $product->getTags()->removeElement($productTag);
             }
         }
-        /** @var ProductTags $tag */
-        foreach ($tags as $tag) {
-            $product->addTag($tag);
+        if ($tagIds) {
+            $tags = $this->productTagsRepo->findByIds($tagIds);
+            /** @var ProductTags $tag */
+            foreach ($tags as $tag) {
+                $product->addTag($tag);
+            }
         }
         $this->entityManager->persist($product);
         $this->entityManager->flush();
+        return $product;
+    }
+
+    public function getOne(string $id)
+    {
+        $product =  $this->productRepository->find($id);
         return $product;
     }
 }

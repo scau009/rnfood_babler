@@ -80,21 +80,25 @@ class Products
 
     /**
      * @ORM\ManyToMany(targetEntity=ProductTags::class, inversedBy="products")
+     * @Groups("api")
      */
-    private $tags;
+    private $tags = [];
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups("api")
      */
     private $endTime;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups("api")
      */
     private $description;
 
     /**
      * @ORM\ManyToMany(targetEntity=Stores::class, inversedBy="products")
+     * @Groups("api")
      */
     private $stores;
 
@@ -103,6 +107,7 @@ class Products
      * @Gedmo\Timestampable(on="create")
      * @var \DateTime $createAt
      * @ORM\Column(type="datetime")
+     * @Groups("api")
      */
     private \DateTime $createAt;
 
@@ -111,6 +116,7 @@ class Products
      * @Gedmo\Timestampable(on="update")
      * @var \DateTime $updateAt
      * @ORM\Column(type="datetime")
+     * @Groups("api")
      */
     private \DateTime $updateAt;
 
@@ -118,6 +124,7 @@ class Products
      * 状态 (onsale=在售，instock=在库中)
      * @var string $status
      * @ORM\Column(type="string")
+     * @Groups("api")
      */
     private string $status;
 

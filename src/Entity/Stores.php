@@ -125,13 +125,13 @@ class Stores
     /**
      * @var Products[] $products
      * @ORM\ManyToMany(targetEntity=Products::class, mappedBy="stores")
-     * @Groups("api")
      */
     private $products;
 
     /**
      * @var Company $company
      * @ORM\ManyToOne(targetEntity=Company::class, inversedBy="stores")
+     * @Groups("api")
      */
     private $company;
 
