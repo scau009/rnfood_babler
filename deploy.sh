@@ -5,6 +5,6 @@ basepath=$(cd `dirname $0`; pwd);
 cd ${basepath};
 
 git pull
-sudo chmod -R 0777 var/cache
+sudo chmod -R 777 var
 composer install
-sudo chmod -R 0777 var/cache
+sudo chmod -R 777 var
