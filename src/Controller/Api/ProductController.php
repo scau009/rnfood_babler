@@ -32,7 +32,6 @@ class ProductController extends BaseApiController
         $pageSize = $request->get('pageSize', 20);
         $products = $productService->getList($request->request,$paginator);
         return View::create($products);
-//        return $this->returnJson($this->normalizeList($page,$pageSize,$companies));
     }
 
     /**

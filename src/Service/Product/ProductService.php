@@ -51,6 +51,11 @@ class ProductService
     {
         $product = new Products();
         $fileBag = $request->files;
+        $storeIds = $request->get('stores');
+        if (empty($storeIds)) {
+            throw new \Exception("请选择适用门店！");
+        }
+
         $product->setTitle($request->get('title'));
         $headImage = $this->uploadHelper->save($fileBag->get('head_image_0'));
         $product->setHeadImage($headImage);
@@ -70,7 +75,7 @@ class ProductService
         $product->setLikes($request->get('likes'));
         $product->setSoldCount($request->get('sold_count'));
         $product->setEndTime(new \DateTime($request->get('end_time')));
-        $storeIds = $request->get('stores');
+
         $stores = $this->storesRepository->getByStoreIds($storeIds);
         /** @var Stores $store */
         foreach ($stores as $store) {
@@ -99,11 +104,16 @@ class ProductService
     {
         $fileBag = $request->files;
         $product->setTitle($request->get('title'));
+        $storeIds = $request->get('stores');
+        if (empty($storeIds)) {
+            throw new \Exception("请选择适用门店！");
+        }
         if ($fileBag->get('head_image_0')) {
             $headImage = $this->uploadHelper->save($fileBag->get('head_image_0'));
         }else{
             $headImage = $request->get('head_image_text_0');
         }
+
         $product->setHeadImage($headImage);
         $collection = new ArrayCollection($product->getBanners());
         for ($i = 0; $i < 9 ; $i++) {
@@ -125,7 +135,7 @@ class ProductService
         $product->setLikes($request->get('likes'));
         $product->setSoldCount($request->get('sold_count'));
         $product->setEndTime(new \DateTime($request->get('end_time')));
-        $storeIds = $request->get('stores');
+
         $stores = $this->storesRepository->getByStoreIds($storeIds);
         foreach ($product->getStores() as $productStore) {
             if (!in_array($productStore->getId(),$storeIds)) {
