@@ -411,17 +411,17 @@ class Products
     {
         $storeNames = join('，', $this->stores->toArray());
         return
-            "<p style='font-size: 16px;color: #656d77'>1. 使用时间：即日起至2021年1 月31日</p>".
-            "<p style='font-size: 16px;color: #656d77'>2. 适用门店：{$storeNames}</p>".
-            "<p style='font-size: 16px;color: #656d77'>3. 无需预约，消费高峰期可能需要排队等位</p>".
-            "<p style='font-size: 16px;color: #656d77'>4. 每桌每次限用一张，满 200 元可用，不可叠加</p>".
-            "<p style='font-size: 16px;color: #656d77'>5. 酒水除外，全场通用</p>".
-            "<p style='font-size: 16px;color: #656d77'>6. 本券不支持拼桌，拆桌买单</p>".
-            "<p style='font-size: 16px;color: #656d77'>7. 本券不兑换，不找零，不可与其他优惠共享</p>".
-            "<p style='font-size: 16px;color: #656d77'>8. 仅限堂食，不提供餐前外带，餐毕未吃完可以打包，打包费以商家为准</p>".
-            "<p style='font-size: 16px;color: #656d77'>9. 发票、酒水饮料、停车费用等问题请详细咨询商家。</p>".
-            "<p style='font-size: 16px;color: #656d77'>10. 本券为限时抢购商品，一经销售不支持退款，请谨慎抢购！</p>".
-            "<p style='font-size: 16px;color: #656d77'>11. 使用方式：结算时出示给商家即可</p>"
+            "<p style='font-size: 14px;color: #656d77'>1. 使用时间：即日起至2021年1 月31日</p>".
+            "<p style='font-size: 14px;color: #656d77'>2. 适用门店：{$storeNames}</p>".
+            "<p style='font-size: 14px;color: #656d77'>3. 无需预约，消费高峰期可能需要排队等位</p>".
+            "<p style='font-size: 14px;color: #656d77'>4. 每桌每次限用一张，满 200 元可用，不可叠加</p>".
+            "<p style='font-size: 14px;color: #656d77'>5. 酒水除外，全场通用</p>".
+            "<p style='font-size: 14px;color: #656d77'>6. 本券不支持拼桌，拆桌买单</p>".
+            "<p style='font-size: 14px;color: #656d77'>7. 本券不兑换，不找零，不可与其他优惠共享</p>".
+            "<p style='font-size: 14px;color: #656d77'>8. 仅限堂食，不提供餐前外带，餐毕未吃完可以打包，打包费以商家为准</p>".
+            "<p style='font-size: 14px;color: #656d77'>9. 发票、酒水饮料、停车费用等问题请详细咨询商家。</p>".
+            "<p style='font-size: 14px;color: #656d77'>10. 本券为限时抢购商品，一经销售不支持退款，请谨慎抢购！</p>".
+            "<p style='font-size: 14px;color: #656d77'>11. 使用方式：结算时出示给商家即可</p>"
             ;
     }
 }
