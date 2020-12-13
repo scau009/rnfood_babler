@@ -10,17 +10,20 @@
                         <thead>
                         <tr>
                             <th>
-                                <div class="col-auto">
-                                    <span class="avatar avatar-sm avatar-rounded" style="background-image: url('{{ item.buyer.avatar }}')"></span>
-                                </div>
-                                <div class="col">
-                                    <div class="text-truncate">
-                                        <strong>{{ item.buyer.name }}</strong>
+                                <div class="row align-items-center">
+                                    <div class="col-auto">
+                                        <img class="avatar avatar-sm avatar-rounded" src="{{ item.buyer.avatar }}" />
                                     </div>
-                                    <div class="text-muted">
-                                        {{ item.buyer.mobile }}
+                                    <div class="col">
+                                        <div class="text-truncate">
+                                            <strong>{{ item.buyer.name }}</strong>
+                                        </div>
+                                        <div class="text-muted">
+                                            {{ item.buyer.mobile }}
+                                        </div>
                                     </div>
                                 </div>
+
                             </th>
                             <th>{{ item.tid }}</th>
                             <th>{{ item.payment.price }}</th>

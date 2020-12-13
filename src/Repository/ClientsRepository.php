@@ -24,6 +24,11 @@ class ClientsRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('c')->andWhere('c.mobile = :mobile')->setParameter('mobile', $mobile)->getQuery()->getOneOrNullResult();
     }
 
+    public function findOneByOpenId(string $openId)
+    {
+        return $this->createQueryBuilder('c')->andWhere('c.openId = :openId')->setParameter('openId', $openId)->getQuery()->getOneOrNullResult();
+    }
+
     // /**
     //  * @return Clients[] Returns an array of Clients objects
     //  */

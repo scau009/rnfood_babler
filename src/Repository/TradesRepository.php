@@ -19,6 +19,31 @@ class TradesRepository extends ServiceEntityRepository
         parent::__construct($registry, Trades::class);
     }
 
+    public function findOneByTid(string $tid)
+    {
+        return $this->createQueryBuilder('t')->andWhere('t.tid = :tid')->setParameter('tid', $tid)->getQuery()->getOneOrNullResult();
+    }
+
+    public function findOneById(string $id)
+    {
+        return $this->find($id);
+    }
+
+    public function findAllByClientId(string $clientId,string  $status = '')
+    {
+        if ($status) {
+            return $this->createQueryBuilder('t')
+                ->andWhere('t.buyer.id = :clientId')
+                ->setParameter('clientId', $clientId)
+                ->andWhere('t.status = :status')
+                ->setParameter('status', $status)
+                ->getQuery();
+        }else{
+            return $this->createQueryBuilder('t')->andWhere('t.buyer.id = :clientId')->setParameter('clientId', $clientId)->getQuery();
+        }
+
+    }
+
     // /**
     //  * @return Trades[] Returns an array of Trades objects
     //  */

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\OrdersRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=OrdersRepository::class)
@@ -20,29 +21,28 @@ class Orders
     /**
      * @var string $oid
      * @ORM\Column(type="string")
+     * @Groups("api")
      */
     private string $oid;
 
     /**
      * @var \App\Entity\Embed\Products $prodcut
      * @ORM\Embedded(class="App\Entity\Embed\Products",columnPrefix="product_")
+     * @Groups("api")
      */
     private $product;
 
     /**
      * @var int $num
      * @ORM\Column(type="integer")
+     * @Groups("api")
      */
     private int $num;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Stores::class, inversedBy="orders")
-     */
-    private $store;
-
-    /**
      * @var \App\Entity\Embed\OrderPayment $payment
      * @ORM\Embedded(class="App\Entity\Embed\OrderPayment",columnPrefix="order_")
+     * @Groups("api")
      */
     private $payment;
 
@@ -51,27 +51,9 @@ class Orders
      */
     private $trades;
 
-    /**
-     * @var string $status
-     * @ORM\Column(type="string",length=20)
-     */
-    private string $status;
-
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getStore(): ?Stores
-    {
-        return $this->store;
-    }
-
-    public function setStore(?Stores $store): self
-    {
-        $this->store = $store;
-
-        return $this;
     }
 
     public function getTrades(): ?Trades
@@ -121,7 +103,7 @@ class Orders
     /**
      * @return Embed\OrderPayment
      */
-    public function getPayment(): Embed\OrderPayment
+    public function getPayment(): ?Embed\OrderPayment
     {
         return $this->payment;
     }
@@ -132,22 +114,6 @@ class Orders
     public function setPayment(Embed\OrderPayment $payment): void
     {
         $this->payment = $payment;
-    }
-
-    /**
-     * @return string
-     */
-    public function getStatus(): string
-    {
-        return $this->status;
-    }
-
-    /**
-     * @param string $status
-     */
-    public function setStatus(string $status): void
-    {
-        $this->status = $status;
     }
 
     /**

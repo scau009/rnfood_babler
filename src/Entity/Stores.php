@@ -178,12 +178,6 @@ class Stores
     private float $locationY = 0;
 
     /**
-     * @var Orders[] $orders
-     * @ORM\OneToMany(targetEntity=Orders::class, mappedBy="store")
-     */
-    private $orders;
-
-    /**
      * @ORM\ManyToMany(targetEntity=Coupons::class, mappedBy="stores")
      */
     private $coupons;
@@ -196,7 +190,6 @@ class Stores
     public function __construct()
     {
         $this->products = new ArrayCollection();
-        $this->orders = new ArrayCollection();
         $this->coupons = new ArrayCollection();
     }
 
@@ -416,36 +409,6 @@ class Stores
     public function setCompany(?Company $company): self
     {
         $this->company = $company;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Orders[]
-     */
-    public function getOrders(): Collection
-    {
-        return $this->orders;
-    }
-
-    public function addOrder(Orders $order): self
-    {
-        if (!$this->orders->contains($order)) {
-            $this->orders[] = $order;
-            $order->setStore($this);
-        }
-
-        return $this;
-    }
-
-    public function removeOrder(Orders $order): self
-    {
-        if ($this->orders->removeElement($order)) {
-            // set the owning side to null (unless already changed)
-            if ($order->getStore() === $this) {
-                $order->setStore(null);
-            }
-        }
 
         return $this;
     }

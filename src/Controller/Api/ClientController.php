@@ -4,8 +4,9 @@
 namespace App\Controller\Api;
 
 use App\Response\CMDJsonResponse;
-use App\Security\User\JwtUser;
 use App\Service\Client\ClientService;
+use FOS\RestBundle\Controller\Annotations as Rest;
+use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -20,12 +21,12 @@ class ClientController extends BaseApiController
      * @Route(path="/userInfo",methods={"GET"})
      * @param Request $request
      * @param ClientService $clientService
-     * @return CMDJsonResponse
+     * @Rest\View(serializerGroups={"api"})
      */
     public function getUserInfoAction(Request $request, ClientService $clientService)
     {
         $client = $this->user->getEntity();
-        return $this->returnJson($this->normalize($client));
+        return View::create($client);
     }
 
     /**

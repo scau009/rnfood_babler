@@ -7,6 +7,7 @@ namespace App\Service\Client;
 use App\Entity\Clients;
 use App\Entity\ProductTags;
 use App\Repository\ClientsRepository;
+use App\Service\WeChat\WeChatMiniProgramService;
 use App\Utils\ImageHelper;
 use App\Utils\UploadHelper;
 use Doctrine\ORM\EntityManagerInterface;
@@ -25,15 +26,22 @@ class ClientService
 
     protected ImageHelper $imageHelper;
 
-    public function __construct(EntityManagerInterface $entityManager,ImageHelper $imageHelper,UploadHelper $uploadHelper)
+    /**
+     * @var WeChatMiniProgramService
+     */
+    private WeChatMiniProgramService $weChatMiniProgramService;
+
+    public function __construct(EntityManagerInterface $entityManager,ImageHelper $imageHelper,
+                                UploadHelper $uploadHelper,WeChatMiniProgramService $weChatMiniProgramService)
     {
         $this->entityManager = $entityManager;
         $this->imageHelper = $imageHelper;
         $this->uploadHelper = $uploadHelper;
         $this->clientRepo = $entityManager->getRepository(Clients::class);
+        $this->weChatMiniProgramService = $weChatMiniProgramService;
     }
 
-    public function registerByMobile(string $mobile)
+    public function registerOrLoginByMobile(string $mobile)
     {
         /** @var Clients $client */
         $client = $this->clientRepo->findOneByMobile($mobile);
@@ -49,6 +57,29 @@ class ClientService
             $this->entityManager->flush();
         }
 
+        return $client;
+    }
+
+    public function registerOrLoginByWx(Request $request)
+    {
+        $userInfo = $request->get('userInfo');
+        $iv = $request->get('iv');
+        $encryptedData = $request->get('encryptedData');
+        $signature = $request->get('signature');
+        $code = $request->get('code');
+        list($session_key,$openid) = $this->weChatMiniProgramService->login($code);
+        //根据openId 找用户表
+        $client = $this->clientRepo->findOneByOpenId($openid);
+        if (!$client) {
+            $client = new Clients();
+            $client->setOpenId($openid);
+            $client->setUsername($userInfo['nickName']);
+            $client->setGender($userInfo['gender'] == 1 ? 'man' : 'woman');
+            $client->setAvatar($userInfo['avatarUrl']);
+            $client->setMobile('');
+            $this->entityManager->persist($client);
+            $this->entityManager->flush();
+        }
         return $client;
     }
 

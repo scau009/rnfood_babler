@@ -3,6 +3,7 @@
 namespace App\Entity\Embed;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Embeddable()
@@ -12,24 +13,28 @@ class Buyer
     /**
      * @var int $id
      * @ORM\Column(type="integer")
+     * @Groups("api")
      */
     private int $id;
 
     /**
      * @var string $name
      * @ORM\Column(type="string",length=20)
+     * @Groups("api")
      */
     private string $name;
 
     /**
      * @var string $mobile
      * @ORM\Column(type="string",length=20)
+     * @Groups("api")
      */
     private string $mobile;
 
     /**
      * @var string $avatar
-     * @ORM\Column(type="string",length=100)
+     * @ORM\Column(type="string",length=255)
+     * @Groups("api")
      */
     private string $avatar;
 

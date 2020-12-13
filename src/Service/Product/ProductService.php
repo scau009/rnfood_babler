@@ -168,7 +168,6 @@ class ProductService
 
     public function getOne(string $id)
     {
-        $product =  $this->productRepository->find($id);
-        return $product;
+        return $this->productRepository->find($id);
     }
 }

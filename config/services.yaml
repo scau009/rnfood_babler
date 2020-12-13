@@ -39,3 +39,8 @@ services:
     App\Utils\UploadHelper:
         arguments:
             $saveDir: '%kernel.project_dir%/public/uploads/files/products/'
+
+    App\Service\WeChat\WeChatMiniProgramService:
+        arguments:
+            $appId: '%env(resolve:MP_APP_ID)%'
+            $appSecret: '%env(resolve:MP_APP_SECRET)%'

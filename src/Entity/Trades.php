@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=TradesRepository::class)
@@ -14,8 +15,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class Trades
 {
     const STATUS_WAIT_PAY = 'wait_pay';//待支付
-    const STATUS_PAID = 'paid';//已支付
-    const STATUS_WAIT_USE = 'wait_use';//待使用
     const STATUS_FINISHED = 'finished';//已完成
     const STATUS_CANCELED = 'canceled';//已取消
 
@@ -29,18 +28,21 @@ class Trades
     /**
      * @var string $tid
      * @ORM\Column(type="string")
+     * @Groups("api")
      */
     private string $tid;
 
     /**
      * @var \App\Entity\Embed\Buyer $buyer
      * @ORM\Embedded(class="App\Entity\Embed\Buyer",columnPrefix="buyer_")
+     * @Groups("api")
      */
     private $buyer;
 
     /**
      * @var \App\Entity\Embed\TradePayment $payment
      * @ORM\Embedded(class="App\Entity\Embed\TradePayment",columnPrefix="trade_")
+     * @Groups("api")
      */
     private $payment;
 
@@ -49,6 +51,7 @@ class Trades
      * @Gedmo\Timestampable(on="create")
      * @var \DateTime $createAt
      * @ORM\Column(type="datetime")
+     * @Groups("api")
      */
     private \DateTime $createAt;
 
@@ -56,9 +59,10 @@ class Trades
      * 支付时间
      * @Gedmo\Timestampable(on="change",field="status",value={"paid"})
      * @var \DateTime $payAt
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime",nullable=true)
+     * @Groups("api")
      */
-    private \DateTime $payAt;
+    private ?\DateTime $payAt = null;
 
     /**
      * 更新时间
@@ -70,6 +74,7 @@ class Trades
 
     /**
      * @ORM\OneToMany(targetEntity=Orders::class, mappedBy="trades")
+     * @Groups("api")
      */
     private $orders;
 
@@ -155,7 +160,7 @@ class Trades
     /**
      * @return Embed\TradePayment
      */
-    public function getPayment(): Embed\TradePayment
+    public function getPayment(): ?Embed\TradePayment
     {
         return $this->payment;
     }
@@ -187,7 +192,7 @@ class Trades
     /**
      * @return \DateTime
      */
-    public function getPayAt(): \DateTime
+    public function getPayAt(): ?\DateTime
     {
         return $this->payAt;
     }
@@ -230,5 +235,28 @@ class Trades
     public function setStatus(string $status): void
     {
         $this->status = $status;
+    }
+
+    /**
+     * @return string
+     * @Groups("api")
+     */
+    public function getStatusLabel()
+    {
+        $map = [
+            Trades::STATUS_WAIT_PAY => '待支付',
+            Trades::STATUS_CANCELED => '已取消',
+            Trades::STATUS_FINISHED => '已完成',
+        ];
+        return $map[$this->status];
+    }
+
+    /**
+     * @return string
+     * @Groups("api")
+     */
+    public function getCreateDate()
+    {
+        return $this->createAt->format('Y/m/d H:i');
     }
 }

@@ -16,7 +16,8 @@ use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 class JwtUserAuthenticator extends AbstractGuardAuthenticator
 {
     private array $whiteList = [
-        'app_api_auth_login',
+        'app_api_auth_loginbymobile',
+        'app_api_auth_loginbywx',
         'app_api_stores_getstorelist',
         'app_api_product_getproductlist',
         'app_api_company_getcompanylist',
