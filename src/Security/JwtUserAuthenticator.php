@@ -22,6 +22,7 @@ class JwtUserAuthenticator extends AbstractGuardAuthenticator
         'app_api_product_getproductlist',
         'app_api_company_getcompanylist',
         'app_api_product_getproduct',
+        'notify',
     ];
     private JwtService $jwtService;
 

@@ -3,8 +3,10 @@
 
 namespace App\Controller\Api;
 
+use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use Psr\Log\LoggerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -16,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class PayController extends BaseApiController
 {
     /**
-     * @Route(path="/notify",name="notify")
+     * @Rest\Route(path="/notify",name="notify")
      */
     public function tradePayNotify(Request $request, LoggerInterface $logger)
     {
