@@ -1,2 +1,2 @@
-paramters:
+parameters:
   wxpay_notify: "https://rnfood.gzcrm.cn/api/pay/notify"
