@@ -44,3 +44,12 @@ services:
         arguments:
             $appId: '%env(resolve:MP_APP_ID)%'
             $appSecret: '%env(resolve:MP_APP_SECRET)%'
+
+    App\Service\WeChat\WeChatMpPayService:
+        arguments:
+            $appId: '%env(resolve:MP_APP_ID)%'
+            $merchId: '%env(resolve:PAYMENT_WECHAT_MP_MERCH_ID)%'
+            $key: '%env(resolve:PAYMENT_WECHAT_MP_KEY)%'
+            $keyPath: '%kernel.project_dir%%env(resolve:PAYMENT_WECHAT_MP_KEY_CONTENT)%'
+            $certPath: '%kernel.project_dir%%env(resolve:PAYMENT_WECHAT_MP_CERT_CONTENT)%'
+            $notifyUrl: '%wxpay_notify%'

@@ -8,6 +8,7 @@ use App\Response\CMDJsonResponse;
 use App\Service\Company\CompanyService;
 use App\Service\Store\StoreService;
 use App\Service\Trade\TradeService;
+use App\Service\WeChat\WeChatMpPayService;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use Knp\Component\Pager\PaginatorInterface;
@@ -25,14 +26,17 @@ class TradeController extends BaseApiController
      * @Route(path="/create",methods={"POST"})
      * @param Request $request
      * @param TradeService $tradeService
+     * @param WeChatMpPayService $payService
      * @Rest\View(serializerGroups={"api"})
      * @throws \Exception
      */
-    public function createTradeAction(Request $request,TradeService $tradeService)
+    public function createTradeAction(Request $request,TradeService $tradeService, WeChatMpPayService $payService)
     {
         $client = $this->user;
         $trade = $tradeService->createOne($request,$client);
-        return View::create($trade);
+        //微信支付
+        $wxOrder = $payService->createOrder($client->getEntity(),$trade);
+        return View::create(compact('trade','wxOrder'));
     }
 
     /**

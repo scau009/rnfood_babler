@@ -4,12 +4,15 @@
 namespace App\Service\Trade;
 
 use App\Entity\Embed\Buyer;
+use App\Entity\Embed\OrderPayment;
+use App\Entity\Embed\TradePayment;
 use App\Entity\Orders;
 use App\Entity\Products;
 use App\Entity\Trades;
 use App\Repository\TradesRepository;
 use App\Security\User\JwtUser;
 use App\Service\Product\ProductService;
+use App\Service\WeChat\WeChatMpPayService;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
@@ -103,11 +106,17 @@ class TradeService
             $order->setProduct($embedProduct);
             $order->setOid($tradeId.'-0');
             $order->setTrades($trade);
-
+            $orderPayment = new OrderPayment();
+            $orderPayment->setPrice($embedProduct->getPrice());
+            $order->setPayment($orderPayment);
             $trade->addOrder($order);
+            $tradePayment = new TradePayment();
+            $tradePayment->setPrice($embedProduct->getPrice());
+            $trade->setPayment($tradePayment);
             $this->entityManager->persist($trade);
             $this->entityManager->persist($order);
             $this->entityManager->flush();
+
             return $trade;
         }
     }
