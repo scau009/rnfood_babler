@@ -1,5 +1,5 @@
 monolog:
-    channedls:
+    channels:
         - notify
     handlers:
         main:
