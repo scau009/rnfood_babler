@@ -6,7 +6,7 @@
         {% for item in pagination %}
             <div class="card mb-2">
                 <table class="table table-hover table-vcenter table-mobile-md card-table">
-                    <thead {{ item.status|getOrderTableBg }}>
+                    <thead class="{{ item.status|getOrderTableBg }}" >
                     <tr>
                         <th>
                             <div class="row align-items-center">
