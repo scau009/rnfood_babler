@@ -3,10 +3,6 @@
 
 namespace App\Controller\Api;
 
-use App\Entity\Trades;
-use App\Response\CMDJsonResponse;
-use App\Service\Company\CompanyService;
-use App\Service\Store\StoreService;
 use App\Service\Trade\TradeService;
 use App\Service\WeChat\WeChatMpPayService;
 use FOS\RestBundle\Controller\Annotations as Rest;
