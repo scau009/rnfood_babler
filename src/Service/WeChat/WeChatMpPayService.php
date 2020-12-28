@@ -37,7 +37,6 @@ class WeChatMpPayService
     }
     public function createOrder(Clients $client,Trades $trade)
     {
-        $d = 'sdsd';
         $result = $this->app->order->unify([
             'body' => 'rnfoodTest',
             'out_trade_no' => $trade->getTid(),

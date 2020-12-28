@@ -1,4 +1,6 @@
 monolog:
+    channedls:
+        - notify
     handlers:
         main:
             type: fingers_crossed
@@ -14,3 +16,10 @@ monolog:
             type: console
             process_psr_3_messages: false
             channels: ["!event", "!doctrine"]
+
+        notify:
+            type: rotating_file
+            max_files: 7
+            level: info
+            path: "%kernel.logs_dir%/%kernel.environment%.notify.log"
+            channels: ['notify']

@@ -21,11 +21,14 @@ class PayController extends BaseApiController
     /**
      * @Rest\Route(path="/notify",name="notify")
      * @Rest\View(serializerGroups={"api"})
+     * @param Request $request
+     * @param LoggerInterface $notifyLogger
      */
-    public function tradePayNotify(Request $request, LoggerInterface $logger)
+    public function tradePayNotify(Request $request, LoggerInterface $notifyLogger)
     {
-        $logger->info("微信支付回调");
-        $logger->info(json_encode($request->request->all()));
+        $notifyLogger->info("微信支付回调");
+        $notifyLogger->info("request.query=",$request->query->all());
+        $notifyLogger->info("request.request=",$request->request->all());
         return new JsonResponse("ddd");
     }
 }
