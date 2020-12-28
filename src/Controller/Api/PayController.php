@@ -29,6 +29,8 @@ class PayController extends BaseApiController
         $notifyLogger->info("微信支付回调");
         $notifyLogger->info("request.query=",$request->query->all());
         $notifyLogger->info("request.request=",$request->request->all());
-        return new JsonResponse("ddd");
+        $query = $request->query->all();
+        $request = $request->request->all();
+        return new JsonResponse(compact('query','request'));
     }
 }
