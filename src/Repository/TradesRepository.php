@@ -19,6 +19,15 @@ class TradesRepository extends ServiceEntityRepository
         parent::__construct($registry, Trades::class);
     }
 
+    public function findAllBySort(array $orderBy)
+    {
+        $q = $this->createQueryBuilder('t');
+        foreach ($orderBy as $key => $value) {
+            $q->orderBy('t.' . $key, $value);
+        }
+        return $q->getQuery();
+    }
+
     public function findOneByTid(string $tid)
     {
         return $this->createQueryBuilder('t')->andWhere('t.tid = :tid')->setParameter('tid', $tid)->getQuery()->getOneOrNullResult();

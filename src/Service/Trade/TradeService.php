@@ -17,7 +17,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class TradeService
 {
@@ -38,7 +37,7 @@ class TradeService
     {
         $page = $parameterBag->get('page',1);
         $pageSize = $parameterBag->get('pageSize',20);
-        $query = $this->tradeRepo->findAll();
+        $query = $this->tradeRepo->findAllBySort(['createAt'=>'Desc']);
         return $paginator->paginate($query, $page, $pageSize);
     }
 

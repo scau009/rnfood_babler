@@ -11,3 +11,10 @@
 .upload_item:hover{
     border-color: #216bc4;
 }
+.table thead.bg-green-lt th{
+    color: #5eba00!important
+}
+
+.table thead.bg-azure-lt th{
+    color: #4299e1!important
+}

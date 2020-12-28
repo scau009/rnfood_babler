@@ -6,6 +6,7 @@ use App\Entity\Company;
 use App\Entity\Products;
 use App\Entity\ProductTags;
 use App\Entity\Stores;
+use App\Entity\Trades;
 use Doctrine\ORM\EntityManagerInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -27,6 +28,7 @@ class AppExtension extends AbstractExtension
             // parameter: ['is_safe' => ['html']]
             // Reference: https://twig.symfony.com/doc/2.x/advanced.html#automatic-escaping
 //            new TwigFilter('filter_name', [$this, 'doSomething']),
+            new TwigFilter('getOrderTableBg', [$this, 'getOrderTableBg']),
         ];
     }
 
@@ -67,5 +69,17 @@ class AppExtension extends AbstractExtension
             ['id'=>"ROLE_USER" ,'label'=> "普通账号"],
             ['id'=>"ROLE_ADMIN" ,'label'=>"管理员账号"],
         ];
+    }
+
+    public function getOrderTableBg(string $status)
+    {
+        $mapping = [
+            Trades::STATUS_PAID => 'bg-azure-lt',
+            Trades::STATUS_WAIT_PAY => '',
+            Trades::STATUS_FINISHED => 'bg-green-lt',
+            Trades::STATUS_CANCELED => '',
+        ];
+
+        return isset($mapping[$status]) ? $mapping[$status] : '';
     }
 }

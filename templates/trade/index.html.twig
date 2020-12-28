@@ -2,11 +2,11 @@
 {% block page_title %}订单列表{% endblock %}
 {% block title %}订单列表{% endblock %}
 {% block body %}
-    <div class="card" >
-        {% if pagination.getTotalItemCount > 0 %}
-            {% for item in pagination %}
-                <table class="table table-hover table-vcenter table-bordered table-mobile-md card-table">
-                    <thead>
+    {% if pagination.getTotalItemCount > 0 %}
+        {% for item in pagination %}
+            <div class="card mb-2">
+                <table class="table table-hover table-vcenter table-mobile-md card-table">
+                    <thead {{ item.status|getOrderTableBg }}>
                     <tr>
                         <th>
                             <div class="row align-items-center">
@@ -24,7 +24,7 @@
                             </div>
                         </th>
                         <th>订单号：{{ item.tid }}</th>
-                        <th>支付：￥{{ item.payment.price ?? 0  }}</th>
+                        <th>总金额：￥{{ item.payment.price ?? 0  }}</th>
                         <th>创建时间：{{ item.createAt|date('Y-m-d H:i:s')}}</th>
                         <th><span class="badge bg-gray-lt">{{ item.status|trans }}</span></th>
                     </tr>
@@ -49,27 +49,28 @@
                                 <div class="col">
                                     <div class="text-truncate">
                                         <strong>￥{{ order.product.price }}</strong>
-                                    </div>f
+                                    </div>
                                     <div class="text-muted">原价：￥{{ order.product.priceWas }}</div>
                                 </div>
                             </td>
                             <td rowspan="{{ item.orders|length }}">
-                                <span class="dropdown">
-                                    <button class="btn dropdown-toggle align-text-top" data-boundary="viewport" data-bs-toggle="dropdown">操作</button>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                      <a class="dropdown-item" href="#">
-                                        详情
-                                      </a>
-                                    </div>
-                                </span>
+                            <span class="dropdown">
+                                <button class="btn dropdown-toggle align-text-top" data-boundary="viewport" data-bs-toggle="dropdown">操作</button>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                  <a class="dropdown-item" href="#">
+                                    详情
+                                  </a>
+                                </div>
+                            </span>
                             </td>
                         </tr>
                     {% endfor %}
                     </tbody>
                 </table>
-
-            {% endfor %}
-        {% else %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="card mb-2">
             <table class="table table-hover table-vcenter table-mobile-md card-table">
                 <tbody>
                 <tr>
@@ -77,18 +78,17 @@
                 </tr>
                 </tbody>
             </table>
-        {% endif %}
-        <div class="card-footer">
-            <div class="row">
-                <div class="col">共{{ pagination.getTotalItemCount }}张订单</div>
-                <div class="col text-right">
-                    {# display navigation #}
-                    <div class="navigation float-right">
-                        {{ knp_pagination_render(pagination) }}
-                    </div>
+        </div>
+    {% endif %}
+    <div class="card-footer">
+        <div class="row">
+            <div class="col">共{{ pagination.getTotalItemCount }}张订单</div>
+            <div class="col text-right">
+                {# display navigation #}
+                <div class="navigation float-right">
+                    {{ knp_pagination_render(pagination) }}
                 </div>
             </div>
-
         </div>
     </div>
 {% endblock %}
