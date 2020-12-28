@@ -56,6 +56,10 @@ class TradeService
         return $trade;
     }
 
+    /**
+     * @param string $tid
+     * @return int|mixed|string|null
+     */
     public function getOneByTid(string $tid)
     {
         return $this->tradeRepo->findOneByTid($tid);

@@ -15,6 +15,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class Trades
 {
     const STATUS_WAIT_PAY = 'wait_pay';//待支付
+    const STATUS_PAID = 'paid';//已支付
     const STATUS_FINISHED = 'finished';//已完成
     const STATUS_CANCELED = 'canceled';//已取消
 
