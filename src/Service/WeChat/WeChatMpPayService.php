@@ -27,6 +27,10 @@ class WeChatMpPayService
 
             'notify_url'         => $notifyUrl,     // 你也可以在下单时单独设置来想覆盖它
 //            'sandbox'            => true, // 设置为 false 或注释则关闭沙箱模式
+            'log' => [
+                'level' => 'debug',
+                'file' => __DIR__.'/../../../var/log/weChatPay.log',
+            ],
         ];
         $this->app = Factory::payment($config);
     }
