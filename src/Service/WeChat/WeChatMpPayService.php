@@ -51,4 +51,12 @@ class WeChatMpPayService
         $config = $this->app->jssdk->bridgeConfig($result['prepay_id']);
         return json_decode($config, true);
     }
+
+    /**
+     * @return Application
+     */
+    public function getApp(): Application
+    {
+        return $this->app;
+    }
 }

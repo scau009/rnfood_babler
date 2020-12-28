@@ -3,6 +3,7 @@
 
 namespace App\Controller\Api;
 
+use App\Service\WeChat\WechatMpPayNotifyService;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use Psr\Log\LoggerInterface;
@@ -24,13 +25,9 @@ class PayController extends BaseApiController
      * @param Request $request
      * @param LoggerInterface $notifyLogger
      */
-    public function tradePayNotify(Request $request, LoggerInterface $notifyLogger)
+    public function tradePayNotify(Request $request, WechatMpPayNotifyService $wechatMpPayNotifyService)
     {
-        $notifyLogger->info("微信支付回调");
-        $notifyLogger->info("request.query=",$request->query->all());
-        $notifyLogger->info("request.request=",$request->request->all());
-        $query = $request->query->all();
-        $request = $request->request->all();
+        $wechatMpPayNotifyService->handleNotify();
         return new JsonResponse(compact('query','request'));
     }
 }
