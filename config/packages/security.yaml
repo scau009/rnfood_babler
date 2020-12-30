@@ -17,7 +17,7 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         whiteList:
-            pattern: ^(/api/product/list|/api/auth/login/mobile|/api/auth/login|/api/product/detail)
+            pattern: ^(/api/product/list|/api/auth/login/mobile|/api/auth/login|/api/product/detail|/api/pay/notify)
             security: false
         api:
             anonymous: true
