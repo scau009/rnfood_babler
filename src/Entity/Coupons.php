@@ -78,6 +78,11 @@ class Coupons
      */
     private $stores;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $qrCode;
+
     public function __construct()
     {
         $this->stores = new ArrayCollection();
@@ -224,6 +229,18 @@ class Coupons
     public function removeStore(Stores $store): self
     {
         $this->stores->removeElement($store);
+
+        return $this;
+    }
+
+    public function getQrCode(): ?string
+    {
+        return $this->qrCode;
+    }
+
+    public function setQrCode(string $qrCode): self
+    {
+        $this->qrCode = $qrCode;
 
         return $this;
     }

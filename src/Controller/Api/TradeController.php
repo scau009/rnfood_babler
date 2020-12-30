@@ -3,11 +3,15 @@
 
 namespace App\Controller\Api;
 
+use App\Entity\Trades;
+use App\Service\Coupon\CouponService;
+use App\Service\Store\StoreService;
 use App\Service\Trade\TradeService;
 use App\Service\WeChat\WeChatMpPayService;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -23,27 +27,42 @@ class TradeController extends BaseApiController
      * @param Request $request
      * @param TradeService $tradeService
      * @param WeChatMpPayService $payService
+     * @param CouponService $couponService
      * @Rest\View(serializerGroups={"api"})
      * @throws \Exception
      */
-    public function createTradeAction(Request $request,TradeService $tradeService, WeChatMpPayService $payService)
+    public function createTradeAction(Request $request,TradeService $tradeService,
+                                      WeChatMpPayService $payService,CouponService $couponService)
     {
         $client = $this->user;
         $trade = $tradeService->createOne($request,$client);
         //微信支付
         $wxOrder = $payService->createOrder($client->getEntity(),$trade);
+        //生成优惠券
+        $params = new ParameterBag();
+        $params->set('clientId', $client->getEntity()->getId());
+        $couponService->createCouponByTrade($trade);
         return View::create(compact('trade','wxOrder'));
     }
 
     /**
-     * @Route(path="/get",methods={"GET"})
+     * @Route(path="/detail",methods={"GET"})
      * @param Request $request
      * @param TradeService $tradeService
+     * @param StoreService $storeService
      * @Rest\View(serializerGroups={"api"})
      */
-    public function getTradeAction(Request $request,TradeService $tradeService)
+    public function getTradeAction(Request $request,TradeService $tradeService,StoreService $storeService)
     {
+        /** @var Trades $trade */
         $trade = $tradeService->getOneByTid($request->get('tid'));
+        if ($trade) {
+            foreach ($trade->getOrders() as $order) {
+                $product = $order->getProduct();
+                $stores = $storeService->getByIds($product->getStoreIds());
+                $product->setStores($stores);
+            }
+        }
         return View::create($trade);
     }
 
@@ -57,7 +76,14 @@ class TradeController extends BaseApiController
      */
     public function getTradeListAction(Request $request, TradeService $tradeService,PaginatorInterface $paginator)
     {
-        $trade = $tradeService->getListByClient($this->user,$request->query,$paginator);
-        return View::create($trade);
+        $tradePagination = $tradeService->getListByClient($this->user,$request->query,$paginator);
+        $list = $tradePagination->getItems();
+        $paginate = [
+            'total' => $tradePagination->getTotalItemCount(),
+            'page' => $tradePagination->getCurrentPageNumber(),
+            'pageSize' => $tradePagination->getItemNumberPerPage(),
+            'hasNext' => $tradePagination->getCurrentPageNumber() * $tradePagination->getItemNumberPerPage() < $tradePagination->getTotalItemCount()
+        ];
+        return View::create(compact('list','paginate'));
     }
 }

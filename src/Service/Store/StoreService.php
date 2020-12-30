@@ -36,6 +36,11 @@ class StoreService
         return $paginator->paginate($query, $page, $pageSize);
     }
 
+    public function getByIds(array $ids)
+    {
+        return $this->storeRepo->getByStoreIds($ids);
+    }
+
     public function createStore(Request $request)
     {
         $fileBag = $request->files;

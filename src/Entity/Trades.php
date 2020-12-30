@@ -248,6 +248,7 @@ class Trades
             Trades::STATUS_WAIT_PAY => '待支付',
             Trades::STATUS_CANCELED => '已取消',
             Trades::STATUS_FINISHED => '已完成',
+            Trades::STATUS_PAID => '已支付',
         ];
         return $map[$this->status];
     }
@@ -259,5 +260,26 @@ class Trades
     public function getCreateDate()
     {
         return $this->createAt->format('Y/m/d H:i');
+    }
+
+    /**
+     * @return array
+     * @Groups("api")
+     */
+    public function getAvailableOperations()
+    {
+        $status = $this->getStatus();
+        if ($status == self::STATUS_WAIT_PAY) {
+            return [
+                ['action' => 'pay', 'label' => '支付'],
+            ];
+        }else if ($status == self::STATUS_PAID) {
+            return [
+                ['action' => 'useCoupon', 'label' => '用券'],
+            ];
+        }
+        return [
+            ['action' => 'detail', 'label' => '详情'],
+        ];
     }
 }

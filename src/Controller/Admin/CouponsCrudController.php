@@ -41,7 +41,7 @@ class CouponsCrudController extends AbstractController
         if ($request->isMethod("GET")) {
 
         }else{
-            $coupon = $couponService->createCoupon($request);
+            $coupon = $couponService->createCoupon($request->request);
             return $this->redirectToRoute('coupon_list');
         }
     }

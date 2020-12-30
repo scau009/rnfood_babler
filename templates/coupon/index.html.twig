@@ -16,6 +16,7 @@
                     <th>类型</th>
                     <th>优惠券号</th>
                     <th>用户</th>
+                    <th>二维码</th>
                     <th>开始时间</th>
                     <th>结束时间</th>
                     <th>状态</th>
@@ -42,7 +43,9 @@
                                 </div>
                             </div>
                         </td>
-
+                        <td>
+                            <img src="{{ item.qrCode }}" style="width: 100px" alt="">
+                        </td>
                         <td>
                             <div>{{ item.beginAt|date('Y-m-d H:i:s') }}</div>
                         </td>
@@ -50,7 +53,7 @@
                             <div>{{ item.expireAt|date('Y-m-d H:i:s') }}</div>
                         </td>
                         <td>
-                            <div>{{ item.status }}</div>
+                            <div>{{ item.status|trans }}</div>
                         </td>
                         <td>
                             <div class="btn-list flex-nowrap">
@@ -80,7 +83,7 @@
                 {% endfor %}
                 {% else %}
                     <tr>
-                        <td colspan="2" class="text-center text-muted" style="height: 400px"> 暂无数据</td>
+                        <td colspan="8" class="text-center text-muted" style="height: 400px"> 暂无数据</td>
                     </tr>
                 {% endif %}
                 </tbody>

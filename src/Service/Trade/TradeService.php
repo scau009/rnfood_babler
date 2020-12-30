@@ -47,6 +47,7 @@ class TradeService
         $pageSize = $parameterBag->get('pageSize',20);
         $status = $parameterBag->get('status','');
         $query = $this->tradeRepo->findAllByClientId($user->getEntity()->getId(),$status);
+
         return $paginator->paginate($query, $page, $pageSize);
     }
 
@@ -119,7 +120,6 @@ class TradeService
             $this->entityManager->persist($trade);
             $this->entityManager->persist($order);
             $this->entityManager->flush();
-
             return $trade;
         }
     }

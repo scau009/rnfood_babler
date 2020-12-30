@@ -1,9 +1,15 @@
 {
+    "bacon/bacon-qr-code": {
+        "version": "2.0.3"
+    },
     "behat/transliterator": {
         "version": "v1.3.0"
     },
     "composer/package-versions-deprecated": {
         "version": "1.11.99.1"
+    },
+    "dasprid/enum": {
+        "version": "1.0.3"
     },
     "doctrine/annotations": {
         "version": "1.0",
@@ -87,6 +93,9 @@
     "egulias/email-validator": {
         "version": "2.1.24"
     },
+    "endroid/qr-code": {
+        "version": "3.9.6"
+    },
     "firebase/php-jwt": {
         "version": "v5.2.0"
     },
@@ -114,6 +123,9 @@
     "guzzlehttp/psr7": {
         "version": "1.7.0"
     },
+    "khanamiryan/qrcode-detector-decoder": {
+        "version": "1.0.4"
+    },
     "knplabs/knp-components": {
         "version": "v3.0.0"
     },
@@ -131,6 +143,9 @@
     },
     "monolog/monolog": {
         "version": "2.1.1"
+    },
+    "myclabs/php-enum": {
+        "version": "1.7.7"
     },
     "nikic/php-parser": {
         "version": "v4.10.2"

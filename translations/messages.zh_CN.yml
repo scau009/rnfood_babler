@@ -2,3 +2,6 @@ wait_pay: 待支付
 paid: 已支付
 finished: 已完成
 canceled: 已取消
+wait_use: 待使用
+used: 已使用
+expired: 已过期

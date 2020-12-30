@@ -46,11 +46,15 @@ class TradesRepository extends ServiceEntityRepository
                 ->setParameter('clientId', $clientId)
                 ->andWhere('t.status = :status')
                 ->setParameter('status', $status)
+                ->orderBy('t.createAt','DESC')
                 ->getQuery();
         }else{
-            return $this->createQueryBuilder('t')->andWhere('t.buyer.id = :clientId')->setParameter('clientId', $clientId)->getQuery();
+            return $this->createQueryBuilder('t')
+                ->andWhere('t.buyer.id = :clientId')
+                ->setParameter('clientId', $clientId)
+                ->orderBy('t.createAt','DESC')
+                ->getQuery();
         }
-
     }
 
     // /**

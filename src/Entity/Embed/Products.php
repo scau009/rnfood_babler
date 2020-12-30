@@ -58,6 +58,12 @@ class Products
     private array $storeIds = [];
 
     /**
+     * @var
+     * @Groups("api")
+     */
+    private $stores;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -167,5 +173,21 @@ class Products
     public function setHeadImage(string $headImage): void
     {
         $this->headImage = $headImage;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStores()
+    {
+        return $this->stores;
+    }
+
+    /**
+     * @param mixed $stores
+     */
+    public function setStores($stores): void
+    {
+        $this->stores = $stores;
     }
 }

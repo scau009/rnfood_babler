@@ -53,3 +53,7 @@ services:
             $keyPath: '%kernel.project_dir%%env(resolve:PAYMENT_WECHAT_MP_KEY_CONTENT)%'
             $certPath: '%kernel.project_dir%%env(resolve:PAYMENT_WECHAT_MP_CERT_CONTENT)%'
             $notifyUrl: '%wxpay_notify%'
+
+    App\Service\QrCode\QrCodeGenerator:
+        arguments:
+            $host: '%env(APP_IMAGE_URL)%'

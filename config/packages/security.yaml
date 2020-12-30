@@ -16,6 +16,9 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        whiteList:
+            pattern: ^(/api/product/list|/api/auth/login/mobile|/api/auth/login|/api/product/detail)
+            security: false
         api:
             anonymous: true
             lazy: true
@@ -50,4 +53,3 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/admin, roles: ROLE_USER }
-        # - { path: ^/profile, roles: ROLE_USER }
