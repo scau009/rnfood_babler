@@ -8,3 +8,5 @@ git pull
 sudo chmod -R 777 var
 composer install
 sudo chmod -R 777 var
+
+php ./bin/console doctrine:schema:update --force
