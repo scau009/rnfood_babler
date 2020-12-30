@@ -5,6 +5,7 @@ namespace App\Service\WeChat;
 
 
 use App\Entity\Trades;
+use App\Service\Coupon\CouponService;
 use App\Service\Trade\TradeService;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
@@ -19,15 +20,19 @@ class WechatMpPayNotifyService
 
     private TradeService $tradeService;
 
+    private CouponService $couponService;
+
     public function __construct(WeChatMpPayService $weChatMpPayService,
                                 LoggerInterface $notifyLogger,
                                 EntityManagerInterface $entityManager,
+                                CouponService $couponService,
                                 TradeService $tradeService)
     {
         $this->weChatMpPayService = $weChatMpPayService;
         $this->logger = $notifyLogger;
         $this->tradeService = $tradeService;
         $this->entityManager = $entityManager;
+        $this->couponService = $couponService;
     }
 
     public function handleNotify()
@@ -51,6 +56,8 @@ class WechatMpPayNotifyService
                 if ($wxTrade['result_code'] && $wxTrade['result_code'] === 'SUCCESS') {
                     $trade->setPayAt(new \DateTime()); // 更新支付时间为当前时间
                     $trade->setStatus(Trades::STATUS_PAID);
+                    //生成优惠券
+                    $this->couponService->createCouponByTrade($trade);
                 }
             } else {
                 return $fail('通信失败，请稍后再通知我');

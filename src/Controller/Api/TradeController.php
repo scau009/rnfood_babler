@@ -38,10 +38,6 @@ class TradeController extends BaseApiController
         $trade = $tradeService->createOne($request,$client);
         //微信支付
         $wxOrder = $payService->createOrder($client->getEntity(),$trade);
-        //生成优惠券
-        $params = new ParameterBag();
-        $params->set('clientId', $client->getEntity()->getId());
-        $couponService->createCouponByTrade($trade);
         return View::create(compact('trade','wxOrder'));
     }
 
