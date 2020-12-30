@@ -97,6 +97,7 @@ class CouponService
             $coupon->setBeginAt(new \DateTime());
             $coupon->setExpireAt((new \DateTime())->add(new \DateInterval("P1Y")));
             $coupon->setStatus(Coupons::STATUS_WAIT_USE);
+            $coupon->setOrders($order);
             $coupon->setQrCode($this->qrCodeGenerator->generateCouponQrCode($coupon));
             $this->entityManager->persist($coupon);
             $coupons[] = $coupon;

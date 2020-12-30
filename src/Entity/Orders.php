@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\OrdersRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -50,6 +52,16 @@ class Orders
      * @ORM\ManyToOne(targetEntity=Trades::class, inversedBy="orders")
      */
     private $trades;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Coupons::class, mappedBy="orders")
+     */
+    private $coupons;
+
+    public function __construct()
+    {
+        $this->coupons = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -130,5 +142,35 @@ class Orders
     public function setNum(int $num): void
     {
         $this->num = $num;
+    }
+
+    /**
+     * @return Collection|Coupons[]
+     */
+    public function getCoupons(): Collection
+    {
+        return $this->coupons;
+    }
+
+    public function addCoupon(Coupons $coupon): self
+    {
+        if (!$this->coupons->contains($coupon)) {
+            $this->coupons[] = $coupon;
+            $coupon->setOrders($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCoupon(Coupons $coupon): self
+    {
+        if ($this->coupons->removeElement($coupon)) {
+            // set the owning side to null (unless already changed)
+            if ($coupon->getOrders() === $this) {
+                $coupon->setOrders(null);
+            }
+        }
+
+        return $this;
     }
 }

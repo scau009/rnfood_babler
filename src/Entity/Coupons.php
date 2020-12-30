@@ -83,6 +83,11 @@ class Coupons
      */
     private $qrCode;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Orders::class, inversedBy="coupons")
+     */
+    private $orders;
+
     public function __construct()
     {
         $this->stores = new ArrayCollection();
@@ -241,6 +246,18 @@ class Coupons
     public function setQrCode(string $qrCode): self
     {
         $this->qrCode = $qrCode;
+
+        return $this;
+    }
+
+    public function getOrders(): ?Orders
+    {
+        return $this->orders;
+    }
+
+    public function setOrders(?Orders $orders): self
+    {
+        $this->orders = $orders;
 
         return $this;
     }
