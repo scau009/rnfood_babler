@@ -6,8 +6,11 @@ namespace App\Service\Coupon;
 use App\Entity\Clients;
 use App\Entity\Coupons;
 use App\Entity\Products;
+use App\Entity\Stores;
 use App\Entity\Trades;
 use App\Repository\CouponsRepository;
+use App\Repository\ProductsRepository;
+use App\Repository\StoresRepository;
 use App\Service\QrCode\QrCodeGenerator;
 use App\Utils\CouponNoGenerator;
 use Doctrine\ORM\EntityManagerInterface;
@@ -22,6 +25,10 @@ class CouponService
 
     private CouponsRepository $couponRepo;
 
+    private StoresRepository $storesRepo;
+
+    private ProductsRepository $productsRepo;
+
     private QrCodeGenerator $qrCodeGenerator;
 
     public function __construct(EntityManagerInterface $entityManager,QrCodeGenerator $qrCodeGenerator)
@@ -29,6 +36,8 @@ class CouponService
         $this->entityManager = $entityManager;
         $this->qrCodeGenerator = $qrCodeGenerator;
         $this->couponRepo = $entityManager->getRepository(Coupons::class);
+        $this->storesRepo = $entityManager->getRepository(Stores::class);
+        $this->productsRepo = $entityManager->getRepository(Products::class);
     }
 
     public function getList(ParameterBag $parameterBag, PaginatorInterface $paginator)
@@ -78,7 +87,7 @@ class CouponService
         $client = $this->entityManager->getRepository(Clients::class)->find($trade->getBuyer()->getId());
         foreach ($trade->getOrders() as $order) {
             /** @var Products $product */
-            $product = $order->getProduct();
+            $product = $this->productsRepo->find($order->getProduct()->getId());
             $coupon = new Coupons();
             $coupon->setCouponNo(CouponNoGenerator::getNo());
             $embedProduct = new \App\Entity\Embed\Products();
@@ -89,7 +98,9 @@ class CouponService
             $embedProduct->setId($product->getId());
             $coupon->setProduct($embedProduct);
             $coupon->setType('buy');
-            foreach ($product->getStores() as $store) {
+
+            $stores = $this->storesRepo->getByStoreIds($order->getProduct()->getStoreIds());
+            foreach ($stores as $store) {
                 $coupon->addStore($store);
             }
             $coupon->setClient($client);

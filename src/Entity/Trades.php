@@ -82,6 +82,7 @@ class Trades
     /**
      * @var string $status
      * @ORM\Column(type="string",length=20)
+     * @Groups("api")
      */
     private string $status;
 
@@ -272,10 +273,6 @@ class Trades
         if ($status == self::STATUS_WAIT_PAY) {
             return [
                 ['action' => 'pay', 'label' => '支付'],
-            ];
-        }else if ($status == self::STATUS_PAID) {
-            return [
-                ['action' => 'useCoupon', 'label' => '用券'],
             ];
         }
         return [

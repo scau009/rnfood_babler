@@ -55,6 +55,7 @@ class Orders
 
     /**
      * @ORM\OneToMany(targetEntity=Coupons::class, mappedBy="orders")
+     * @Groups("api")
      */
     private $coupons;
 

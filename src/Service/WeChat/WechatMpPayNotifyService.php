@@ -58,13 +58,14 @@ class WechatMpPayNotifyService
                     $trade->setStatus(Trades::STATUS_PAID);
                     //生成优惠券
                     $this->couponService->createCouponByTrade($trade);
+                    $this->entityManager->persist($trade);
+                    $this->entityManager->flush();
+                }elseif ($wxTrade['result_code'] && $wxTrade['result_code'] === 'FAIL'){
+                    $this->logger->info("微信支付用户支付失败");
                 }
             } else {
                 return $fail('通信失败，请稍后再通知我');
             }
-
-            $this->entityManager->persist($trade);
-            $this->entityManager->flush();
 
             return true; // 返回处理完成
         });

@@ -6,6 +6,7 @@ use App\Repository\CouponsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=CouponsRepository::class)
@@ -30,6 +31,7 @@ class Coupons
      * 优惠券码
      * @var string $couponNo
      * @ORM\Column(type="string")
+     * @Groups("api")
      */
     private string $couponNo;
 
@@ -37,6 +39,7 @@ class Coupons
      * 获得方式（buy=购买，gift=转赠）
      * @var string $type
      * @ORM\Column(type="string")
+     * @Groups("api")
      */
     private string $type;
 
@@ -44,6 +47,7 @@ class Coupons
      * 优惠券状态
      * @var string $status
      * @ORM\Column(type="string")
+     * @Groups("api")
      */
     private string $status;
 
@@ -80,6 +84,7 @@ class Coupons
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("api")
      */
     private $qrCode;
 

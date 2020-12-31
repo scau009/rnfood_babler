@@ -11,7 +11,6 @@ use App\Service\WeChat\WeChatMpPayService;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -32,11 +31,39 @@ class TradeController extends BaseApiController
      * @throws \Exception
      */
     public function createTradeAction(Request $request,TradeService $tradeService,
-                                      WeChatMpPayService $payService,CouponService $couponService)
+                                      WeChatMpPayService $payService)
     {
         $client = $this->user;
         $trade = $tradeService->createOne($request,$client);
         //微信支付
+        $wxOrder = $payService->createOrder($client->getEntity(),$trade);
+        return View::create(compact('trade','wxOrder'));
+    }
+
+    /**
+     * @Rest\Route(path="/pay",methods={"POST"})
+     * @param Request $request
+     * @param TradeService $tradeService
+     * @param WeChatMpPayService $payService
+     * @throws \Exception
+     * @Rest\View(serializerGroups={"api"})
+     */
+    public function tradePayAction(Request $request,TradeService $tradeService, WeChatMpPayService $payService)
+    {
+        $client = $this->user;
+        /** @var Trades $trade */
+        $trade = $tradeService->getOneByTid($request->get('tid'));
+        if ($trade->getStatus() == Trades::STATUS_PAID) {
+            throw new \Exception("请勿重复支付");
+        }
+        if ($trade->getStatus() == Trades::STATUS_CANCELED) {
+            throw new \Exception("订单已取消，请重新购买");
+        }
+
+        if ($trade->getStatus() == Trades::STATUS_FINISHED) {
+            throw new \Exception("订单已完成，请重新购买");
+        }
+
         $wxOrder = $payService->createOrder($client->getEntity(),$trade);
         return View::create(compact('trade','wxOrder'));
     }
