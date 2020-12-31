@@ -8,12 +8,17 @@ use App\Entity\Clients;
 use App\Entity\Trades;
 use EasyWeChat\Factory;
 use EasyWeChat\Payment\Application;
+use Psr\Log\LoggerInterface;
 
 class WeChatMpPayService
 {
     private Application $app;
 
-    public function __construct(string $appId, string $merchId, string $key , string $certPath, string $keyPath, string $notifyUrl)
+    private LoggerInterface $logger;
+
+    public function __construct(string $appId, string $merchId, string $key ,
+                                string $certPath, string $keyPath, string $notifyUrl,
+                                LoggerInterface $logger)
     {
         $config = [
             // 必要配置
@@ -33,6 +38,7 @@ class WeChatMpPayService
             ],
         ];
         $this->app = Factory::payment($config);
+        $this->logger = $logger;
     }
 
     public function getOpenId()
@@ -52,6 +58,7 @@ class WeChatMpPayService
         if ($result['return_code'] && $result['return_code'] == "FAIL") {
             throw new \Exception("调用微信统一下单接口失败，".$result['return_msg']);
         }
+        $this->logger->info("微信统一下单接口信息",$result);
         $config = $this->app->jssdk->bridgeConfig($result['prepay_id']);
         return json_decode($config, true);
     }
