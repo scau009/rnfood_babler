@@ -88,30 +88,33 @@ class CouponService
         foreach ($trade->getOrders() as $order) {
             /** @var Products $product */
             $product = $this->productsRepo->find($order->getProduct()->getId());
-            $coupon = new Coupons();
-            $coupon->setCouponNo(CouponNoGenerator::getNo());
-            $embedProduct = new \App\Entity\Embed\Products();
-            $embedProduct->setTitle($product->getTitle());
-            $embedProduct->setPriceWas($product->getPriceWas());
-            $embedProduct->setPrice($product->getPrice());
-            $embedProduct->setDescription($product->getDescription());
-            $embedProduct->setId($product->getId());
-            $coupon->setProduct($embedProduct);
-            $coupon->setType('buy');
-
             $stores = $this->storesRepo->getByStoreIds($order->getProduct()->getStoreIds());
-            foreach ($stores as $store) {
-                $coupon->addStore($store);
+            for ($i = 0; $i < $order->getNum(); $i++) {
+                $coupon = new Coupons();
+                $coupon->setCouponNo(CouponNoGenerator::getNo());
+                $embedProduct = new \App\Entity\Embed\Products();
+                $embedProduct->setTitle($product->getTitle());
+                $embedProduct->setPriceWas($product->getPriceWas());
+                $embedProduct->setPrice($product->getPrice());
+                $embedProduct->setDescription($product->getDescription());
+                $embedProduct->setId($product->getId());
+                $coupon->setProduct($embedProduct);
+                $coupon->setType('buy');
+
+                foreach ($stores as $store) {
+                    $coupon->addStore($store);
+                }
+                $coupon->setClient($client);
+                $coupon->setProductId($product->getId());
+                $coupon->setBeginAt(new \DateTime());
+                $coupon->setExpireAt((new \DateTime())->add(new \DateInterval("P1Y")));
+                $coupon->setStatus(Coupons::STATUS_WAIT_USE);
+                $coupon->setOrders($order);
+                $coupon->setQrCode($this->qrCodeGenerator->generateCouponQrCode($coupon));
+                $this->entityManager->persist($coupon);
+                $coupons[] = $coupon;
             }
-            $coupon->setClient($client);
-            $coupon->setProductId($product->getId());
-            $coupon->setBeginAt(new \DateTime());
-            $coupon->setExpireAt((new \DateTime())->add(new \DateInterval("P1Y")));
-            $coupon->setStatus(Coupons::STATUS_WAIT_USE);
-            $coupon->setOrders($order);
-            $coupon->setQrCode($this->qrCodeGenerator->generateCouponQrCode($coupon));
-            $this->entityManager->persist($coupon);
-            $coupons[] = $coupon;
+
         }
         $this->entityManager->flush();
         return $coupons;
